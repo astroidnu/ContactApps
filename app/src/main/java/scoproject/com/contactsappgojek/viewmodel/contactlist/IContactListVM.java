@@ -2,7 +2,7 @@ package scoproject.com.contactsappgojek.viewmodel.contactlist;
 
 import java.util.List;
 
-import scoproject.com.contactsappgojek.model.People;
+import scoproject.com.contactsappgojek.data.People;
 
 /**
  * Created by ibnumuzzakkir on 18/05/2017.

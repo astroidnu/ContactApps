@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="obj"
-            type="scoproject.com.contactsappgojek.model.People" />
+            type="scoproject.com.contactsappgojek.data.People" />
         <variable
             name="isIndex"
             type="java.lang.Boolean" />

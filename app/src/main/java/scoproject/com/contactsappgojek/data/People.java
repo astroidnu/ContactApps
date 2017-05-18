@@ -1,4 +1,4 @@
-package scoproject.com.contactsappgojek.model;
+package scoproject.com.contactsappgojek.data;
 
 
 import com.google.gson.annotations.SerializedName;

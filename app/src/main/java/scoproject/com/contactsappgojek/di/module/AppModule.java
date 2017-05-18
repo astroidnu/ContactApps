@@ -11,8 +11,9 @@ import dagger.Module;
 import dagger.Provides;
 import scoproject.com.contactsappgojek.ContactsApp;
 import scoproject.com.contactsappgojek.di.scope.AppScope;
-import scoproject.com.contactsappgojek.model.DaoMaster;
-import scoproject.com.contactsappgojek.model.DaoSession;
+import scoproject.com.contactsappgojek.data.DaoMaster;
+import scoproject.com.contactsappgojek.data.DaoSession;
+import scoproject.com.contactsappgojek.model.PeopleModel;
 import scoproject.com.contactsappgojek.utils.AppConst;
 
 /**
@@ -50,6 +51,14 @@ public class AppModule {
         DaoMaster daoMaster = new DaoMaster(db);
         Log.d("Schema DB" , String.valueOf(daoMaster.getSchemaVersion()));
         return daoMaster.newSession();
+    }
+
+    //Provide DB Model Section
+
+    @Provides
+    @AppScope
+    PeopleModel providePeopleModel(DaoSession daoSession) {
+        return new PeopleModel(mApp, daoSession);
     }
 
 }

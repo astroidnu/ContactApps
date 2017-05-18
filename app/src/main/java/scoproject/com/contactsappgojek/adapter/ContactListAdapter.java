@@ -5,14 +5,13 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.databinding.ItemContactListBinding;
-import scoproject.com.contactsappgojek.model.People;
+import scoproject.com.contactsappgojek.data.People;
 import scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowVM;
 
 /**

@@ -1,11 +1,10 @@
 package scoproject.com.contactsappgojek.viewmodel.contactlist;
 
-import android.content.Context;
 import android.databinding.ObservableField;
 
 import scoproject.com.contactsappgojek.databinding.ItemContactListBinding;
 import scoproject.com.contactsappgojek.di.component.AppComponent;
-import scoproject.com.contactsappgojek.model.People;
+import scoproject.com.contactsappgojek.data.People;
 import scoproject.com.contactsappgojek.ui.base.BaseRowVM;
 
 /**

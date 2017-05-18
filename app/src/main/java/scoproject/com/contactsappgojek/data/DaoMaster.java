@@ -1,4 +1,4 @@
-package scoproject.com.contactsappgojek.model;
+package scoproject.com.contactsappgojek.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

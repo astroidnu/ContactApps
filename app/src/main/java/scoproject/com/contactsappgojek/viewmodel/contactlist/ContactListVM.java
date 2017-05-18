@@ -13,7 +13,7 @@ import javax.inject.Inject;
 
 import scoproject.com.contactsappgojek.BR;
 import scoproject.com.contactsappgojek.adapter.ContactListAdapter;
-import scoproject.com.contactsappgojek.model.People;
+import scoproject.com.contactsappgojek.data.People;
 import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIService;
 import scoproject.com.contactsappgojek.ui.base.BaseVM;
 import scoproject.com.contactsappgojek.ui.base.view.ViewVM;
