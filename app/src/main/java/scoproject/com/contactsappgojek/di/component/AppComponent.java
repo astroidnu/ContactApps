@@ -13,6 +13,7 @@ import scoproject.com.contactsappgojek.ContactsApp;
 import scoproject.com.contactsappgojek.di.module.AppModule;
 import scoproject.com.contactsappgojek.di.module.NetworkModule;
 import scoproject.com.contactsappgojek.di.scope.AppScope;
+import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIService;
 
 /**
  * Created by ibnumuzzakkir on 5/18/17.
@@ -36,4 +37,7 @@ public interface AppComponent extends IAppComponent {
     Gson getGson();
     RefWatcher refWatcher();
     Realm realm();
+
+    //API Services
+    GetContactListAPIService getContactListApiService();
 }

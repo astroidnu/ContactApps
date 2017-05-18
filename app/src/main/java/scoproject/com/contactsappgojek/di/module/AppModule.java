@@ -21,8 +21,6 @@ public class AppModule {
 
     private final ContactsApp mApp;
 
-    private RefWatcher mRefWatcher;
-
     public AppModule(ContactsApp app) {
         this.mApp = app;
     }

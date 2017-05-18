@@ -2,10 +2,13 @@ package scoproject.com.contactsappgojek.networking.contactlist;
 
 import android.util.Log;
 
+import java.util.List;
+
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import scoproject.com.contactsappgojek.model.People;
 import scoproject.com.contactsappgojek.networking.NetworkService;
 import scoproject.com.contactsappgojek.networking.addnewcontact.AddNewContactReponse;
 
@@ -15,15 +18,14 @@ import scoproject.com.contactsappgojek.networking.addnewcontact.AddNewContactRep
  * Garena Indonesia
  */
 
-public class ContactListAPIService {
+public class GetContactListAPIService {
     private NetworkService mNetworkService;
 
-    public ContactListAPIService(NetworkService networkService){
+    public GetContactListAPIService(NetworkService networkService){
         mNetworkService = networkService;
     }
 
-    public Flowable<ContactListResponse> getContactList() {
-
+    public Flowable<List<People>> getContactList() {
         return mNetworkService.getPeopleList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

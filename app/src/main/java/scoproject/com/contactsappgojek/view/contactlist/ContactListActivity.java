@@ -2,6 +2,11 @@ package scoproject.com.contactsappgojek.view.contactlist;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.google.gson.Gson;
+
+import javax.inject.Inject;
 
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.databinding.ActivityContactListBinding;
@@ -23,8 +28,10 @@ public class ContactListActivity extends BaseActivity<ActivityContactListBinding
     protected void onCreateUI(Bundle bundle) {
         setAndBindContentView(bundle,R.layout.activity_contact_list);
         mContactListVM = new ContactListVM(this);
-        binding.setVm(mContactListVM);
         mComponent.inject(mContactListVM);
+        mContactListVM.takeContext(this);
+        binding.setVm(mContactListVM);
+
     }
 
     @Override
@@ -32,4 +39,5 @@ public class ContactListActivity extends BaseActivity<ActivityContactListBinding
         mComponent = DaggerContactListComponent.builder().appComponent(appComponent).build();
         mComponent.inject(this);
     }
+
 }

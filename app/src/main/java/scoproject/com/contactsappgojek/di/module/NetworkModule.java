@@ -20,9 +20,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import scoproject.com.contactsappgojek.BuildConfig;
 import scoproject.com.contactsappgojek.di.scope.AppScope;
 import scoproject.com.contactsappgojek.networking.NetworkService;
-import scoproject.com.contactsappgojek.networking.contactlist.ContactListAPIService;
+import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIService;
 
 /**
  * Created by ibnumuzzakkir on 5/18/17.
@@ -43,7 +44,7 @@ public class NetworkModule {
                 .create();
 
         return new Retrofit.Builder()
-                .baseUrl("#")
+                .baseUrl(BuildConfig.BASE_URL)
                 .client(getUnsafeOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -65,8 +66,8 @@ public class NetworkModule {
 
     @Provides
     @AppScope
-    public ContactListAPIService provideGetContactListAPIService(NetworkService mNetworkService){
-        return  new ContactListAPIService(mNetworkService);
+    public GetContactListAPIService provideGetContactListAPIService(NetworkService mNetworkService){
+        return  new GetContactListAPIService(mNetworkService);
     }
 //
 //    @Provides
