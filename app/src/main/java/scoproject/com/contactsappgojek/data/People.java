@@ -1,6 +1,9 @@
 package scoproject.com.contactsappgojek.data;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -14,7 +17,7 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 
 @Entity
-public class People{
+public class People implements Parcelable{
     @Id
     @SerializedName("id")
     public int id;
@@ -45,6 +48,42 @@ public class People{
     public People() {
     }
 
+
+    protected People(Parcel in) {
+        id = in.readInt();
+        first_name = in.readString();
+        last_name = in.readString();
+        profile_pic = in.readString();
+        favorite = in.readByte() != 0;
+        url = in.readString();
+    }
+
+    public static final Creator<People> CREATOR = new Creator<People>() {
+        @Override
+        public People createFromParcel(Parcel in) {
+            return new People(in);
+        }
+
+        @Override
+        public People[] newArray(int size) {
+            return new People[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(first_name);
+        dest.writeString(last_name);
+        dest.writeString(profile_pic);
+        dest.writeByte((byte) (favorite ? 1 : 0));
+        dest.writeString(url);
+    }
 
     public int getId() {
         return id;
@@ -97,6 +136,4 @@ public class People{
     public boolean getFavorite() {
         return this.favorite;
     }
-
-
 }
