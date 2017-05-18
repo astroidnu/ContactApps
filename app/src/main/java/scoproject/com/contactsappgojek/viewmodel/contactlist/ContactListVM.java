@@ -47,6 +47,7 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
     @Override
     public void onLoad(){
         super.onLoad();
+        setLoading(true);
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         compositeDisposable.add(
                 mGetContactListAPIService.getContactList().subscribe(peopleData ->setAdapter(peopleData),

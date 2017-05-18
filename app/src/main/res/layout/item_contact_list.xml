@@ -21,18 +21,17 @@
         android:clickable="true"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/sectionTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.10"
-            android:text="@{isIndex ? vm.mInitialName.substring(0, 1) : @string/empty}"
+            android:text="@{vm.mInitialName.substring(0,1)}"
             tools:text="A"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
             />
         <ImageView
-            app:profile_pic="@{obj.profile_pic}"
+            app:imageUrl="@{vm.urlPhoto}"
             android:id="@+id/itemImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

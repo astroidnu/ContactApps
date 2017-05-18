@@ -2,6 +2,7 @@ package scoproject.com.contactsappgojek.view.contactlist;
 
 import dagger.Component;
 import scoproject.com.contactsappgojek.di.component.AppComponent;
+import scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowVM;
 import scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListVM;
 
 /**
@@ -16,4 +17,5 @@ import scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListVM;
 public interface ContactListComponent {
     void inject(ContactListActivity contactListActivity);
     void inject(ContactListVM contactListVM);
+    void inject(ContactListRowVM contactListRowVM);
 }
