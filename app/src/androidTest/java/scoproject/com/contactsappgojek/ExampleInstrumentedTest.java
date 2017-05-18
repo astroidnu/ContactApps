@@ -1,4 +1,4 @@
-package scoproject.com.contactsappgo_jek;
+package scoproject.com.contactsappgojek;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

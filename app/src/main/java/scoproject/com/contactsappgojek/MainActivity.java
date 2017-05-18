@@ -1,4 +1,4 @@
-package scoproject.com.contactsappgo_jek;
+package scoproject.com.contactsappgojek;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
