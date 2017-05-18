@@ -2,6 +2,8 @@ package scoproject.com.contactsappgojek.di.module;
 
 import android.app.Application;
 
+import com.squareup.leakcanary.RefWatcher;
+
 import dagger.Module;
 import dagger.Provides;
 import scoproject.com.contactsappgojek.ContactsApp;
@@ -16,6 +18,8 @@ public class AppModule {
 
     private final ContactsApp mApp;
 
+    private RefWatcher mRefWatcher;
+
     public AppModule(ContactsApp app) {
         this.mApp = app;
     }
@@ -23,5 +27,9 @@ public class AppModule {
     @Provides
     @AppScope
     Application provideApplicationContext(){ return mApp;}
+
+    @Provides
+    @AppScope
+    RefWatcher providRefWatcher(){ return mRefWatcher;}
 }
 

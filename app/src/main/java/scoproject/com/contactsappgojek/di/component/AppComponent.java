@@ -3,6 +3,7 @@ package scoproject.com.contactsappgojek.di.component;
 import android.app.Application;
 
 import com.google.gson.Gson;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.io.File;
 
@@ -32,4 +33,5 @@ public interface AppComponent extends IAppComponent {
 
     Application getApplication();
     Gson getGson();
+    RefWatcher refWatcher();
 }

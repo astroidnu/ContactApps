@@ -17,6 +17,9 @@ import com.squareup.leakcanary.RefWatcher;
 import javax.inject.Inject;
 
 import io.realm.Realm;
+import scoproject.com.contactsappgojek.BR;
+import scoproject.com.contactsappgojek.ContactsApp;
+import scoproject.com.contactsappgojek.di.component.AppComponent;
 import scoproject.com.contactsappgojek.ui.base.view.ViewVM;
 
 /**
@@ -28,14 +31,32 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends IBaseVM>
 
     // Inject a Realm instance into every Activity, since the instance
     // is cached and reused for a thread (avoids create/destroy overhead)
-    @Inject
-    protected Realm realm;
+//    @Inject
+//    protected Realm realm;
 
     protected B binding;
-    @Inject protected V viewModel;
 
-    @Inject
-    RefWatcher refWatcher;
+    protected V viewModel;
+//
+//    @Inject
+//    RefWatcher refWatcher;
+
+    protected abstract void onCreateUI(Bundle bundle);
+    protected abstract void onCreateComponent(AppComponent appComponent);
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        onCreateComponent(ContactsApp.getApp().component());
+        onCreateUI(savedInstanceState);
+//        initDataBinding();
+//        if (activityScreenSwitcher == null) {
+//            throw new IllegalStateException(
+//                    "No injection happened. Add component.inject(this) in onCreateComponent() implementation.");
+//        }
+//        activityScreenSwitcher.attach(this);
+    }
+
 
     @Override
     @CallSuper
@@ -48,29 +69,31 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends IBaseVM>
     @CallSuper
     protected void onDestroy() {
         super.onDestroy();
-        if(refWatcher != null) {
-            if(viewModel != null) { refWatcher.watch(viewModel); }
-        }
+//        if(refWatcher != null) {
+//            if(viewModel != null) { refWatcher.watch(viewModel); }
+//        }
         if(viewModel != null) { viewModel.detachView(); }
         binding = null;
         viewModel = null;
-        if(realm != null) { realm.close(); }
     }
 
     /* Sets the content view, creates the binding and attaches the view to the view model */
     protected final void setAndBindContentView(@Nullable Bundle savedInstanceState, @LayoutRes int layoutResID) {
-        if(viewModel == null) { throw new IllegalStateException("viewModel must already be set via injection"); }
         binding = DataBindingUtil.setContentView(this, layoutResID);
-//        binding.setVariable(BR.vm, viewModel);
+        binding.setVariable(BR.vm, viewModel);
 
-        try {
-            //noinspection unchecked
-            viewModel.attachView((ViewVM) this, savedInstanceState);
-        } catch(ClassCastException e) {
-            if (!(viewModel instanceof NoBaseVM)) {
-                throw new RuntimeException(getClass().getSimpleName() + " must implement MvvmView subclass as declared in " + viewModel.getClass().getSimpleName());
-            }
-        }
+//        try {
+//            //noinspection unchecked
+//            viewModel.attachView((ViewVM) this, savedInstanceState);
+//        } catch(ClassCastException e) {
+//            if (!(viewModel instanceof NoBaseVM)) {
+//                throw new RuntimeException(getClass().getSimpleName() + " must implement MvvmView subclass as declared in " + viewModel.getClass().getSimpleName());
+//            }
+//        }
+    }
+
+    public ViewDataBinding getViewBinding(){
+        return binding;
     }
 
     public int dimen(@DimenRes int resId) {

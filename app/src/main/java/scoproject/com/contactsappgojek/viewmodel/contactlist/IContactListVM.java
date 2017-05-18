@@ -7,4 +7,5 @@ package scoproject.com.contactsappgojek.viewmodel.contactlist;
  */
 
 public interface IContactListVM {
+    void getContactList();
 }
