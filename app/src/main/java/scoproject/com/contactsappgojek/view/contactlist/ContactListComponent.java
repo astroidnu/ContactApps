@@ -11,5 +11,5 @@ import scoproject.com.contactsappgojek.di.component.AppComponent;
 
 @ContactListScope
 @Component(dependencies = {AppComponent.class})
-public class ContactListComponent {
+public interface ContactListComponent {
 }

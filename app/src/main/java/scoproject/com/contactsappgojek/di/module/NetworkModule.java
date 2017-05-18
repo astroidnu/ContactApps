@@ -21,6 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import scoproject.com.contactsappgojek.di.scope.AppScope;
+import scoproject.com.contactsappgojek.networking.NetworkService;
 
 /**
  * Created by ibnumuzzakkir on 5/18/17.
@@ -54,12 +55,12 @@ public class NetworkModule {
         return new Gson();
     }
 
-//    @Provides
-//    @AppScope
-//    public NetworkService providesNetworkService(
-//            Retrofit retrofit) {
-//        return retrofit.create(NetworkService.class);
-//    }
+    @Provides
+    @AppScope
+    public NetworkService providesNetworkService(
+            Retrofit retrofit) {
+        return retrofit.create(NetworkService.class);
+    }
 
 //    @Provides
 //    @AppScope
