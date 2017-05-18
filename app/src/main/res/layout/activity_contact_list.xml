@@ -42,9 +42,21 @@
             android:scaleType="center"
             app:backgroundTint="@color/colorPrimaryDark"
             android:src="@drawable/ic_add_contacts"/>
-        <android.support.v7.widget.RecyclerView
+        <RelativeLayout
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="match_parent">
+                <ProgressBar
+                    android:id="@+id/list_people_progress_bar"
+                    android:layout_centerInParent="true"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:visibility="@{vm.isLoading ? View.VISIBLE : View.GONE}"/>
+                <android.support.v7.widget.RecyclerView
+                    app:adapter="@{vm.mContactListAdapter}"
+                    app:layoutManager="@{vm.mLinearLayoutManager}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+        </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

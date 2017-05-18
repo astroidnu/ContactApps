@@ -1,12 +1,19 @@
 package scoproject.com.contactsappgojek.viewmodel.contactlist;
 
 import android.content.Context;
+import android.databinding.Bindable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+import scoproject.com.contactsappgojek.BR;
+import scoproject.com.contactsappgojek.adapter.ContactListAdapter;
+import scoproject.com.contactsappgojek.model.People;
 import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIService;
 import scoproject.com.contactsappgojek.ui.base.BaseVM;
 import scoproject.com.contactsappgojek.ui.base.view.ViewVM;
@@ -25,6 +32,12 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
     @Inject
     Gson gson;
 
+
+    public ContactListAdapter mContactListAdapter;
+    public LinearLayoutManager mLinearLayoutManager;
+    private List<People> mPeopleList;
+    private boolean isLoading = false;
+
     private Context mContext;
     public ContactListVM(Context context){
         mContext = context;
@@ -34,14 +47,29 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
     @Override
     public void onLoad(){
         super.onLoad();
-        Log.d(getClass().getName(), gson.toJson("hello"));
+        mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         compositeDisposable.add(
-                mGetContactListAPIService.getContactList().subscribe(peopleData -> Log.d(getClass().getName(),gson.toJson(peopleData)),
+                mGetContactListAPIService.getContactList().subscribe(peopleData ->setAdapter(peopleData),
                         throwable -> Log.d(getClass().getName(), throwable.getMessage())));
     }
 
     @Override
-    public void getContactList() {
-        mGetContactListAPIService.getContactList();
+    public void setAdapter(List<People> peopleList) {
+        mPeopleList = peopleList;
+        setLoading(false);
+        mContactListAdapter = new ContactListAdapter(mContext,mPeopleList);
+        mContactListAdapter.notifyDataSetChanged();
+    }
+
+    @Bindable
+    @Override
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    @Override
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+        notifyPropertyChanged(BR._all);
     }
 }
