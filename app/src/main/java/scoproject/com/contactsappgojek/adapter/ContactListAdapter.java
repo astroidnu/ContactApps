@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import scoproject.com.contactsappgojek.R;
+import scoproject.com.contactsappgojek.databinding.ItemContactListBinding;
 import scoproject.com.contactsappgojek.model.People;
+import scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowVM;
 
 /**
  * Created by ibnumuzzakkir on 5/19/17.
@@ -35,9 +37,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         switch (holder.getItemViewType()){
             case R.layout.item_contact_list:
-//                PeopleRowVM peopleRowVM = new PeopleRowVM(mPeopleDatas.getResults().get(position),  ((ItemPeopleBinding) holder.getDataBinding()));
-//                peopleRowVM.takeContext(mContext);
-//                ((ItemPeopleBinding) holder.getDataBinding()).setVm(peopleRowVM);
+                ContactListRowVM contactListRowVM = new ContactListRowVM(mPeopleDatas.get(position),  ((ItemContactListBinding) holder.getDataBinding()));
+                contactListRowVM.takeContext(mContext);
+                ((ItemContactListBinding) holder.getDataBinding()).setVm(contactListRowVM);
                 break;
         }
     }
