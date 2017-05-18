@@ -1,16 +1,19 @@
 package scoproject.com.contactsappgojek.di.module;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import scoproject.com.contactsappgojek.ContactsApp;
 import scoproject.com.contactsappgojek.di.scope.AppScope;
+import scoproject.com.contactsappgojek.model.DaoMaster;
+import scoproject.com.contactsappgojek.model.DaoSession;
+import scoproject.com.contactsappgojek.utils.AppConst;
 
 /**
  * Created by ibnumuzzakkir on 5/18/17.
@@ -36,17 +39,17 @@ public class AppModule {
         return LeakCanary.install(mApp);
     }
 
-    @Provides
-    @AppScope
-    static RealmConfiguration provideRealmConfiguration() {
-        RealmConfiguration.Builder builder = new RealmConfiguration.Builder();
-//        if(BuildConfig.DEBUG) { builder = builder.deleteRealmIfMigrationNeeded(); }
-        return builder.build();
-    }
 
     @Provides
-    static Realm provideRealm(RealmConfiguration realmConfiguration) {
-        return Realm.getInstance(realmConfiguration);
+    @AppScope
+    DaoSession provideDaoSession() {
+        String DbName = AppConst.database_name.APP_DATABASE_NAME;
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(ContactsApp.getApp(), DbName);
+        Log.d("New DB Name: ", DbName);
+        SQLiteDatabase db = devOpenHelper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        Log.d("Schema DB" , String.valueOf(daoMaster.getSchemaVersion()));
+        return daoMaster.newSession();
     }
 
 }

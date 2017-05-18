@@ -8,7 +8,6 @@ import com.squareup.leakcanary.RefWatcher;
 import java.io.File;
 
 import dagger.Component;
-import io.realm.Realm;
 import scoproject.com.contactsappgojek.ContactsApp;
 import scoproject.com.contactsappgojek.di.module.AppModule;
 import scoproject.com.contactsappgojek.di.module.NetworkModule;
@@ -36,7 +35,6 @@ public interface AppComponent extends IAppComponent {
     Application getApplication();
     Gson getGson();
     RefWatcher refWatcher();
-    Realm realm();
 
     //API Services
     GetContactListAPIService getContactListApiService();

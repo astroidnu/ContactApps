@@ -5,6 +5,12 @@
     <data>
         <import type="android.view.View"/>
         <variable
+            name="obj"
+            type="scoproject.com.contactsappgojek.model.People" />
+        <variable
+            name="isIndex"
+            type="java.lang.Boolean" />
+        <variable
             name="vm"
             type="scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowVM"/>
     </data>
@@ -20,11 +26,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.10"
-            android:text="A"
+            android:text="@{isIndex ? vm.mInitialName.substring(0, 1) : @string/empty}"
+            tools:text="A"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
             />
         <ImageView
+            app:profile_pic="@{obj.profile_pic}"
             android:id="@+id/itemImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

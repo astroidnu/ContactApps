@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'realm-android'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 25
@@ -61,8 +61,15 @@ ext.daggerVersion = '2.10'
 ext.parcelerVersion = '1.1.6'
 ext.glideVersion = '3.8.0'
 
+greendao {
+    targetGenDir 'src/main/java'
+    schemaVersion 1
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'org.greenrobot:greendao:3.2.2'
 
     compile "com.android.support:support-fragment:$supportLibVersion"
     compile "com.android.support:support-core-ui:$supportLibVersion"

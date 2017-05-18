@@ -16,7 +16,6 @@ import com.squareup.leakcanary.RefWatcher;
 
 import javax.inject.Inject;
 
-import io.realm.Realm;
 import scoproject.com.contactsappgojek.BR;
 import scoproject.com.contactsappgojek.ContactsApp;
 import scoproject.com.contactsappgojek.di.component.AppComponent;
@@ -30,9 +29,6 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends IBaseVM>
 
 
     // Inject a Realm instance into every Activity, since the instance
-    // is cached and reused for a thread (avoids create/destroy overhead)
-    @Inject
-    protected Realm realm;
 
     protected B binding;
 
@@ -75,7 +71,6 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends IBaseVM>
         if(viewModel != null) { viewModel.detachView(); }
         binding = null;
         viewModel = null;
-        if(realm != null) { realm.close(); }
     }
 
     /* Sets the content view, creates the binding and attaches the view to the view model */

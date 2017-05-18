@@ -15,14 +15,18 @@ import scoproject.com.contactsappgojek.ui.base.BaseRowVM;
 public class ContactListRowVM extends BaseRowVM{
     private ItemContactListBinding mItemContactListBinding;
     private People mPeople;
+    private String mUrlPhoto;
 
     public ObservableField<String> mFullName = new ObservableField<>();
+    public ObservableField<String> mInitialName = new ObservableField<>();
 
     public ContactListRowVM(People people, ItemContactListBinding itemContactListBinding){
         mPeople = people;
         mItemContactListBinding = itemContactListBinding;
+        mInitialName.set(people.first_name);
         mFullName.set(mPeople.first_name + " " + mPeople.last_name);
     }
+
     @Override
     protected void onCreateComponent(AppComponent appComponent) {
 
