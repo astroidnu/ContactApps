@@ -2,6 +2,7 @@ package scoproject.com.contactsappgojek.viewmodel.contactlist;
 
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableField;
+import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -44,10 +45,10 @@ public class ContactListRowVM extends BaseRowVM{
     }
 
     @BindingAdapter({"bind:imageUrl"})
-    public static void loadImage(ImageView view, String imageUrl) {
-        if(imageUrl.contains("missing")){
-            imageUrl = "http://gojek-contacts-app.herokuapp.com/"+imageUrl;
-        }
+    public static void loadImage(ImageView view, @NonNull String imageUrl) {
+//        if(imageUrl.contains("/images/missing.png")){
+//            imageUrl = "http://gojek-contacts-app.herokuapp.com/"+imageUrl;
+//        }
         Glide.with(view.getContext())
                 .load(imageUrl)
                 .placeholder(R.drawable.ic_message)

@@ -30,12 +30,23 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
             />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:text="@{vm.mInitialName.substring(0,1)}"
+            tools:text="A"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_textview"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="0.15"
+            android:layout_height="wrap_content" />
         <ImageView
             app:imageUrl="@{vm.urlPhoto}"
             android:id="@+id/itemImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:visibility="gone"
             android:layout_weight="0.15" />
         <TextView
             android:id="@+id/itemTitle"
