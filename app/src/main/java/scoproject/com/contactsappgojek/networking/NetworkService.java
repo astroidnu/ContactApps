@@ -4,6 +4,7 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import scoproject.com.contactsappgojek.model.People;
+import scoproject.com.contactsappgojek.networking.contactlist.ContactListResponse;
 
 /**
  * Created by ibnumuzzakkir on 18/05/2017.
@@ -13,5 +14,5 @@ import scoproject.com.contactsappgojek.model.People;
 
 public interface NetworkService {
     @GET("/contacts.json")
-    Observable<People> getPeopleList(@Query("results") String result, @Query("nat") String nat);
+    Observable<ContactListResponse> getPeopleList();
 }
