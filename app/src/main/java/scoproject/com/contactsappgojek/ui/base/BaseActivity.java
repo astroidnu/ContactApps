@@ -31,15 +31,15 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends IBaseVM>
 
     // Inject a Realm instance into every Activity, since the instance
     // is cached and reused for a thread (avoids create/destroy overhead)
-//    @Inject
-//    protected Realm realm;
+    @Inject
+    protected Realm realm;
 
     protected B binding;
 
     protected V viewModel;
 //
-//    @Inject
-//    RefWatcher refWatcher;
+    @Inject
+    RefWatcher refWatcher;
 
     protected abstract void onCreateUI(Bundle bundle);
     protected abstract void onCreateComponent(AppComponent appComponent);
@@ -69,12 +69,13 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends IBaseVM>
     @CallSuper
     protected void onDestroy() {
         super.onDestroy();
-//        if(refWatcher != null) {
-//            if(viewModel != null) { refWatcher.watch(viewModel); }
-//        }
+        if(refWatcher != null) {
+            if(viewModel != null) { refWatcher.watch(viewModel); }
+        }
         if(viewModel != null) { viewModel.detachView(); }
         binding = null;
         viewModel = null;
+        if(realm != null) { realm.close(); }
     }
 
     /* Sets the content view, creates the binding and attaches the view to the view model */

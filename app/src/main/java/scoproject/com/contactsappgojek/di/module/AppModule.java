@@ -2,10 +2,13 @@ package scoproject.com.contactsappgojek.di.module;
 
 import android.app.Application;
 
+import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import scoproject.com.contactsappgojek.ContactsApp;
 import scoproject.com.contactsappgojek.di.scope.AppScope;
 
@@ -28,8 +31,25 @@ public class AppModule {
     @AppScope
     Application provideApplicationContext(){ return mApp;}
 
+
     @Provides
     @AppScope
-    RefWatcher providRefWatcher(){ return mRefWatcher;}
+    RefWatcher provideRefWatcher() {
+        return LeakCanary.install(mApp);
+    }
+
+    @Provides
+    @AppScope
+    static RealmConfiguration provideRealmConfiguration() {
+        RealmConfiguration.Builder builder = new RealmConfiguration.Builder();
+//        if(BuildConfig.DEBUG) { builder = builder.deleteRealmIfMigrationNeeded(); }
+        return builder.build();
+    }
+
+    @Provides
+    static Realm provideRealm(RealmConfiguration realmConfiguration) {
+        return Realm.getInstance(realmConfiguration);
+    }
+
 }
 
