@@ -13,7 +13,7 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 /** 
  * DAO for table "PEOPLE".
 */
-public class PeopleDao extends AbstractDao<People, Integer> {
+public class PeopleDao extends AbstractDao<People, Long> {
 
     public static final String TABLENAME = "PEOPLE";
 
@@ -22,7 +22,7 @@ public class PeopleDao extends AbstractDao<People, Integer> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, int.class, "id", true, "ID");
+        public final static Property Id = new Property(0, long.class, "id", true, "_id");
         public final static Property First_name = new Property(1, String.class, "first_name", false, "FIRST_NAME");
         public final static Property Last_name = new Property(2, String.class, "last_name", false, "LAST_NAME");
         public final static Property Profile_pic = new Property(3, String.class, "profile_pic", false, "PROFILE_PIC");
@@ -43,7 +43,7 @@ public class PeopleDao extends AbstractDao<People, Integer> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"PEOPLE\" (" + //
-                "\"ID\" INTEGER PRIMARY KEY NOT NULL ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY NOT NULL ," + // 0: id
                 "\"FIRST_NAME\" TEXT," + // 1: first_name
                 "\"LAST_NAME\" TEXT," + // 2: last_name
                 "\"PROFILE_PIC\" TEXT," + // 3: profile_pic
@@ -112,14 +112,14 @@ public class PeopleDao extends AbstractDao<People, Integer> {
     }
 
     @Override
-    public Integer readKey(Cursor cursor, int offset) {
-        return cursor.getInt(offset + 0);
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.getLong(offset + 0);
     }    
 
     @Override
     public People readEntity(Cursor cursor, int offset) {
         People entity = new People( //
-            cursor.getInt(offset + 0), // id
+            cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // first_name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // last_name
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // profile_pic
@@ -131,7 +131,7 @@ public class PeopleDao extends AbstractDao<People, Integer> {
      
     @Override
     public void readEntity(Cursor cursor, People entity, int offset) {
-        entity.setId(cursor.getInt(offset + 0));
+        entity.setId(cursor.getLong(offset + 0));
         entity.setFirst_name(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setLast_name(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setProfile_pic(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
@@ -140,12 +140,13 @@ public class PeopleDao extends AbstractDao<People, Integer> {
      }
     
     @Override
-    protected final Integer updateKeyAfterInsert(People entity, long rowId) {
-        return entity.getId();
+    protected final Long updateKeyAfterInsert(People entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public Integer getKey(People entity) {
+    public Long getKey(People entity) {
         if(entity != null) {
             return entity.getId();
         } else {

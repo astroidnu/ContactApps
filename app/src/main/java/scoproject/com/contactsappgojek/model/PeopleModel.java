@@ -1,5 +1,6 @@
 package scoproject.com.contactsappgojek.model;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.List;
@@ -24,6 +25,21 @@ public class PeopleModel extends BaseModel{
     @Nullable
     public List<People> loadAll() {
         return mEntityDao.loadAll();
+    }
+
+    @Nullable
+    public List<People> loadAllContactList(){
+        return mEntityDao.queryBuilder()
+                .orderAsc(PeopleDao.Properties.First_name).list();
+    }
+
+    @Nullable
+    public List<People> loadFavoritePeopleList(){
+        return mEntityDao.queryBuilder().where(PeopleDao.Properties.Favorite.eq(true)).list();
+    }
+
+    public List<People> loadUnFavoritePeopleList(){
+        return mEntityDao.queryBuilder().where(PeopleDao.Properties.Favorite.eq(false)).list();
     }
 
     public synchronized void save(People people) {

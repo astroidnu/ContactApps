@@ -11,7 +11,7 @@ import scoproject.com.contactsappgojek.data.People;
  */
 
 public interface IContactListVM {
-    void setAdapter(List<People> peopleList);
+    void saveToDB(List<People> peopleList);
     void setLoading(boolean loading);
     boolean isLoading();
 }

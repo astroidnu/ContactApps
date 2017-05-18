@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import scoproject.com.contactsappgojek.BR;
 import scoproject.com.contactsappgojek.adapter.ContactListAdapter;
 import scoproject.com.contactsappgojek.data.People;
+import scoproject.com.contactsappgojek.model.PeopleModel;
 import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIService;
 import scoproject.com.contactsappgojek.ui.base.BaseVM;
 import scoproject.com.contactsappgojek.ui.base.view.ViewVM;
@@ -28,7 +29,8 @@ import scoproject.com.contactsappgojek.view.contactlist.ContactListActivity;
 public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implements IContactListVM {
     @Inject
     GetContactListAPIService mGetContactListAPIService;
-
+    @Inject
+    PeopleModel mPeopleModel;
     @Inject
     Gson gson;
 
@@ -50,16 +52,19 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
         setLoading(true);
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         compositeDisposable.add(
-                mGetContactListAPIService.getContactList().subscribe(peopleData ->setAdapter(peopleData),
+                mGetContactListAPIService.getContactList().subscribe(peopleData ->saveToDB(peopleData),
                         throwable -> Log.d(getClass().getName(), throwable.getMessage())));
+
+        mContactListAdapter = new ContactListAdapter(mContext,mPeopleModel.loadAllContactList());
+        mContactListAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void setAdapter(List<People> peopleList) {
-        mPeopleList = peopleList;
+    public void saveToDB(List<People> peopleList) {
+        for(People people : peopleList){
+            mPeopleModel.save(people);
+        }
         setLoading(false);
-        mContactListAdapter = new ContactListAdapter(mContext,mPeopleList);
-        mContactListAdapter.notifyDataSetChanged();
     }
 
     @Bindable

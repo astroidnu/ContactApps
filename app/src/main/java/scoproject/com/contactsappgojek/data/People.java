@@ -20,7 +20,7 @@ import org.greenrobot.greendao.annotation.Generated;
 public class People implements Parcelable{
     @Id
     @SerializedName("id")
-    public int id;
+    public long id;
     @SerializedName("first_name")
     public String first_name;
     @SerializedName("last_name")
@@ -33,8 +33,17 @@ public class People implements Parcelable{
     public String url;
 
 
-    @Generated(hash = 1440424676)
-    public People(int id, String first_name, String last_name, String profile_pic,
+    protected People(Parcel in) {
+        id = in.readInt();
+        first_name = in.readString();
+        last_name = in.readString();
+        profile_pic = in.readString();
+        favorite = in.readByte() != 0;
+        url = in.readString();
+    }
+
+    @Generated(hash = 1879578571)
+    public People(long id, String first_name, String last_name, String profile_pic,
             boolean favorite, String url) {
         this.id = id;
         this.first_name = first_name;
@@ -46,16 +55,6 @@ public class People implements Parcelable{
 
     @Generated(hash = 1406030881)
     public People() {
-    }
-
-
-    protected People(Parcel in) {
-        id = in.readInt();
-        first_name = in.readString();
-        last_name = in.readString();
-        profile_pic = in.readString();
-        favorite = in.readByte() != 0;
-        url = in.readString();
     }
 
     public static final Creator<People> CREATOR = new Creator<People>() {
@@ -77,7 +76,7 @@ public class People implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(first_name);
         dest.writeString(last_name);
         dest.writeString(profile_pic);
@@ -85,11 +84,11 @@ public class People implements Parcelable{
         dest.writeString(url);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -136,4 +135,5 @@ public class People implements Parcelable{
     public boolean getFavorite() {
         return this.favorite;
     }
+
 }
