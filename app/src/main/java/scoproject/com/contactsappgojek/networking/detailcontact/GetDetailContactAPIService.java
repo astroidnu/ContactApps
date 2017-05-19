@@ -1,8 +1,6 @@
-package scoproject.com.contactsappgojek.networking.contactlist;
+package scoproject.com.contactsappgojek.networking.detailcontact;
 
 import android.util.Log;
-
-import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -17,15 +15,19 @@ import scoproject.com.contactsappgojek.networking.NetworkService;
  * Garena Indonesia
  */
 
-public class GetContactListAPIService {
+public class GetDetailContactAPIService {
     private NetworkService mNetworkService;
+    private int mId;
 
-    public GetContactListAPIService(NetworkService networkService){
+    public void init(int id){
+        mId = id;
+    }
+    public GetDetailContactAPIService(NetworkService networkService){
         mNetworkService = networkService;
     }
 
-    public Flowable<List<People>> getContactList() {
-        return mNetworkService.getPeopleList()
+    public Flowable<People> getContactListById(int id) {
+        return mNetworkService.getPeopleById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(this::handleError)

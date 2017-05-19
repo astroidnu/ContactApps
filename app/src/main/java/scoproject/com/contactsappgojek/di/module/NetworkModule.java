@@ -24,6 +24,7 @@ import scoproject.com.contactsappgojek.BuildConfig;
 import scoproject.com.contactsappgojek.di.scope.AppScope;
 import scoproject.com.contactsappgojek.networking.NetworkService;
 import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIService;
+import scoproject.com.contactsappgojek.networking.detailcontact.GetDetailContactAPIService;
 
 /**
  * Created by ibnumuzzakkir on 5/18/17.
@@ -69,12 +70,12 @@ public class NetworkModule {
     public GetContactListAPIService provideGetContactListAPIService(NetworkService mNetworkService){
         return  new GetContactListAPIService(mNetworkService);
     }
-//
-//    @Provides
-//    @AppScope
-//    public ListPeopleAPIService provideListPeopleAPIService(NetworkService mNetworkService){
-//        return  new ListPeopleAPIService(mNetworkService);
-//    }
+
+    @Provides
+    @AppScope
+    public GetDetailContactAPIService provideGetDetailContactAPIService(NetworkService mNetworkService){
+        return  new GetDetailContactAPIService(mNetworkService);
+    }
 
     private OkHttpClient getUnsafeOkHttpClient() {
         try {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import scoproject.com.contactsappgojek.data.People;
 
 /**
@@ -15,4 +16,7 @@ import scoproject.com.contactsappgojek.data.People;
 public interface NetworkService {
     @GET("/contacts.json")
     Observable<List<People>> getPeopleList();
+
+    @GET("/contacts/{id}.json")
+    Observable<People> getPeopleById(@Path("id") int id);
 }
