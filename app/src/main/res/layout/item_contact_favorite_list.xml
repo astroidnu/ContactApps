@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:layout_marginBottom="16dp"
+        android:paddingTop="16px"
+        android:layout_marginBottom="16px"
         android:orientation="horizontal">
         <ImageView
             android:tint="@color/colorPrimaryDark"

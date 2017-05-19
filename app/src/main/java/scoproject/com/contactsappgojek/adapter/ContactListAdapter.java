@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import scoproject.com.contactsappgojek.R;
@@ -23,15 +24,22 @@ import scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowVM;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHolder> {
     private Context mContext;
-    private List<People> mPeopleFavoriteList;
-    private List<People> mPeopleUnFavoriteList;
+    private List<People> peopleList;
+    private List<People> mPeopleFavoriteList = new ArrayList<>();
+    private List<People> mPeopleUnFavoriteList = new ArrayList<>();
 
-    public ContactListAdapter(Context context, List<People> peopleFavoriteList, List<People> peopleUnFavoriteList){
+    public ContactListAdapter(Context context, List<People> peoples){
+        peopleList = peoples;
         mContext = context;
-        Log.d(getClass().getName(), String.valueOf(peopleFavoriteList.size()) +" "+ String.valueOf(peopleUnFavoriteList.size()));
-        mPeopleFavoriteList =  peopleFavoriteList;
-        mPeopleUnFavoriteList = peopleUnFavoriteList;
+        for(People people : peopleList){
+            if(people.getFavorite()){
+                mPeopleFavoriteList.add(people);
+            }else{
+                mPeopleUnFavoriteList.add(people);
+            }
+        }
     }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewDataBinding viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),viewType, parent, false);
@@ -51,6 +59,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 contactListRowVM.takeContext(mContext);
                 ((ItemContactListBinding) holder.getDataBinding()).setVm(contactListRowVM);
                 break;
+            case R.layout.item_section:
+                //Only for section view
+                break;
         }
     }
 
@@ -58,6 +69,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     public int getItemViewType(int position) {
         if(position < mPeopleFavoriteList.size())
             return R.layout.item_contact_favorite_list;
+        else if(position == mPeopleFavoriteList.size() + 1)
+            return R.layout.item_section;
         else
             return R.layout.item_contact_list;
     }
@@ -81,7 +94,4 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         }
     }
 
-    public Context getContext(){
-        return mContext;
-    }
 }

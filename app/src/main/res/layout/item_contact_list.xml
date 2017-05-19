@@ -8,16 +8,14 @@
             name="obj"
             type="scoproject.com.contactsappgojek.data.People" />
         <variable
-            name="isIndex"
-            type="java.lang.Boolean" />
-        <variable
             name="vm"
             type="scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowVM"/>
     </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:paddingTop="16px"
+        android:layout_marginBottom="16px"
         android:clickable="true"
         android:orientation="horizontal">
         <ImageView
