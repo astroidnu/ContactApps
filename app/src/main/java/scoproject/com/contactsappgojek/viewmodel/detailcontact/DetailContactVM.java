@@ -99,7 +99,26 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
     }
 
     public void onShareMenuClick(){
-        Log.d(getClass().getName(), "onShareMenuClick()");
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                mPeople.phoneNumber);
+        sendIntent.setType("text/plain");
+        getContext().startActivity(sendIntent);
+    }
+
+    public void onEditMenuClick(){
+        Log.d(getClass().getName(), "onEditMenuClick()");
+    }
+
+    public void onIconEmailClick(){
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto:"+mPeople.email));
+        getContext().startActivity(Intent.createChooser(emailIntent, "Send email"));
+    }
+
+    public void onFavoriteClick(){
+        Log.d(getClass().getName(), "onFavoriteClick()");
     }
 
     @BindingAdapter({"bind:imageUrl"})
