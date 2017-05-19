@@ -98,6 +98,10 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
         Toast.makeText(getContext(), mPeople.phoneNumber, Toast.LENGTH_SHORT).show();
     }
 
+    public void onShareMenuClick(){
+        Log.d(getClass().getName(), "onShareMenuClick()");
+    }
+
     @BindingAdapter({"bind:imageUrl"})
     public static void loadImage(ImageView view, String imageUrl) {
         Glide.with(view.getContext())
