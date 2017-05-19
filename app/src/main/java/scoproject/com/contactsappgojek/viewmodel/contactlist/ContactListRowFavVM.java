@@ -3,9 +3,12 @@ package scoproject.com.contactsappgojek.viewmodel.contactlist;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+
+import javax.inject.Inject;
 
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.data.People;
@@ -13,14 +16,19 @@ import scoproject.com.contactsappgojek.databinding.ItemContactFavoriteListBindin
 import scoproject.com.contactsappgojek.databinding.ItemContactListBinding;
 import scoproject.com.contactsappgojek.di.component.AppComponent;
 import scoproject.com.contactsappgojek.ui.base.BaseRowVM;
+import scoproject.com.contactsappgojek.ui.base.view.ActivityScreenSwitcher;
 import scoproject.com.contactsappgojek.view.contactlist.ContactListComponent;
 import scoproject.com.contactsappgojek.view.contactlist.DaggerContactListComponent;
+import scoproject.com.contactsappgojek.view.detailcontact.DetailContactActivity;
 
 /**
  * Created by ibnumuzzakkir on 5/19/17.
  */
 
 public class ContactListRowFavVM extends BaseRowVM {
+    @Inject
+    ActivityScreenSwitcher mActivityScreenSwitcher;
+
     private ItemContactFavoriteListBinding mItemContactFavoriteListBinding;
     private People mPeople;
     private ContactListComponent mComponent;
@@ -43,6 +51,10 @@ public class ContactListRowFavVM extends BaseRowVM {
     public String urlPhoto() {
         // The URL will usually come from a model (i.e Profile)
         return mPeople.getProfile_pic();
+    }
+
+    public void onItemClick(){
+        mActivityScreenSwitcher.open(new DetailContactActivity.Screen());
     }
 
     @BindingAdapter({"bind:imageUrl"})

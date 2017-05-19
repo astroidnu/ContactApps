@@ -15,9 +15,9 @@
             type="scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowFavVM"/>
     </data>
     <LinearLayout
+        android:onClick="@{()->vm.onItemClick()}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
         android:paddingTop="16px"
         android:layout_marginBottom="16px"
         android:orientation="horizontal">

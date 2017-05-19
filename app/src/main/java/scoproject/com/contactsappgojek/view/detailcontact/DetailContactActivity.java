@@ -1,11 +1,15 @@
 package scoproject.com.contactsappgojek.view.detailcontact;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.databinding.ActivityDetailContactListBinding;
 import scoproject.com.contactsappgojek.di.component.AppComponent;
 import scoproject.com.contactsappgojek.ui.base.BaseActivity;
+import scoproject.com.contactsappgojek.ui.base.view.ActivityScreen;
 import scoproject.com.contactsappgojek.viewmodel.detailcontact.DetailContactVM;
 
 /**
@@ -20,7 +24,7 @@ public class DetailContactActivity extends BaseActivity<ActivityDetailContactLis
 
     @Override
     protected void onCreateUI(Bundle bundle) {
-        setAndBindContentView(bundle, R.layout.activity_contact_list);
+        setAndBindContentView(bundle, R.layout.activity_detail_contact_list);
         mViewModel = new DetailContactVM();
         mComponent.inject(mViewModel);
         mViewModel.takeContext(this);
@@ -32,5 +36,21 @@ public class DetailContactActivity extends BaseActivity<ActivityDetailContactLis
     protected void onCreateComponent(AppComponent appComponent) {
         mComponent = DaggerDetailContactComponent.builder().appComponent(appComponent).build();
         mComponent.inject(this);
+    }
+
+    public static class Screen extends ActivityScreen{
+        public Screen(){
+
+        }
+
+        @Override
+        protected void configureIntent(@NonNull Intent intent) {
+
+        }
+
+        @Override
+        protected Class<? extends Activity> activityClass() {
+            return DetailContactActivity.class;
+        }
     }
 }

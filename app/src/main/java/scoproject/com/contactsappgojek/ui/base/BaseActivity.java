@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import scoproject.com.contactsappgojek.BR;
 import scoproject.com.contactsappgojek.ContactsApp;
 import scoproject.com.contactsappgojek.di.component.AppComponent;
+import scoproject.com.contactsappgojek.ui.base.view.ActivityScreenSwitcher;
 import scoproject.com.contactsappgojek.ui.base.view.ViewVM;
 
 /**
@@ -37,6 +38,9 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends IBaseVM>
     @Inject
     RefWatcher refWatcher;
 
+    @Inject
+    ActivityScreenSwitcher activityScreenSwitcher;
+
     protected abstract void onCreateUI(Bundle bundle);
     protected abstract void onCreateComponent(AppComponent appComponent);
 
@@ -45,12 +49,11 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends IBaseVM>
         super.onCreate(savedInstanceState);
         onCreateComponent(ContactsApp.getApp().component());
         onCreateUI(savedInstanceState);
-//        initDataBinding();
-//        if (activityScreenSwitcher == null) {
-//            throw new IllegalStateException(
-//                    "No injection happened. Add component.inject(this) in onCreateComponent() implementation.");
-//        }
-//        activityScreenSwitcher.attach(this);
+        if (activityScreenSwitcher == null) {
+            throw new IllegalStateException(
+                    "No injection happened. Add component.inject(this) in onCreateComponent() implementation.");
+        }
+        activityScreenSwitcher.attach(this);
     }
 
 
