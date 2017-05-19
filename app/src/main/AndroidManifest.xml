@@ -22,6 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.detailcontact.DetailContactActivity"
+            android:label="Detail Contact Activity"/>
     </application>
 
 </manifest>

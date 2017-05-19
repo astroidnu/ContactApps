@@ -7,4 +7,5 @@ package scoproject.com.contactsappgojek.viewmodel.detailcontact;
  */
 
 public interface IDetailContact {
+    void getDetailContact(int id);
 }
