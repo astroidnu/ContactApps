@@ -4,14 +4,17 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import java.util.List;
 
 import scoproject.com.contactsappgojek.R;
+import scoproject.com.contactsappgojek.databinding.ItemContactFavoriteListBinding;
 import scoproject.com.contactsappgojek.databinding.ItemContactListBinding;
 import scoproject.com.contactsappgojek.data.People;
+import scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowFavVM;
 import scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowVM;
 
 /**
@@ -20,11 +23,14 @@ import scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowVM;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHolder> {
     private Context mContext;
-    public List<People> mPeopleDatas;
+    private List<People> mPeopleFavoriteList;
+    private List<People> mPeopleUnFavoriteList;
 
-    public ContactListAdapter(Context context, List<People> peopleList){
+    public ContactListAdapter(Context context, List<People> peopleFavoriteList, List<People> peopleUnFavoriteList){
         mContext = context;
-        mPeopleDatas = peopleList;
+        Log.d(getClass().getName(), String.valueOf(peopleFavoriteList.size()) +" "+ String.valueOf(peopleUnFavoriteList.size()));
+        mPeopleFavoriteList =  peopleFavoriteList;
+        mPeopleUnFavoriteList = peopleUnFavoriteList;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,8 +41,13 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         switch (holder.getItemViewType()){
+            case R.layout.item_contact_favorite_list:
+                ContactListRowFavVM contactListRowFavVM = new ContactListRowFavVM(mPeopleFavoriteList.get(position),  ((ItemContactFavoriteListBinding) holder.getDataBinding()));
+                contactListRowFavVM.takeContext(mContext);
+                ((ItemContactFavoriteListBinding) holder.getDataBinding()).setVm(contactListRowFavVM);
+                break;
             case R.layout.item_contact_list:
-                ContactListRowVM contactListRowVM = new ContactListRowVM(mPeopleDatas.get(position),  ((ItemContactListBinding) holder.getDataBinding()));
+                ContactListRowVM contactListRowVM = new ContactListRowVM(mPeopleUnFavoriteList.get(position - mPeopleFavoriteList.size()),  ((ItemContactListBinding) holder.getDataBinding()));
                 contactListRowVM.takeContext(mContext);
                 ((ItemContactListBinding) holder.getDataBinding()).setVm(contactListRowVM);
                 break;
@@ -45,14 +56,16 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public int getItemViewType(int position) {
-        return R.layout.item_contact_list;
+        if(position < mPeopleFavoriteList.size())
+            return R.layout.item_contact_favorite_list;
+        else
+            return R.layout.item_contact_list;
     }
 
     @Override
     public int getItemCount() {
-        return mPeopleDatas.size();
+        return mPeopleFavoriteList.size() + mPeopleUnFavoriteList.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ViewDataBinding mViewDataBinding;

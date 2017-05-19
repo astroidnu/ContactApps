@@ -12,35 +12,21 @@
             type="java.lang.Boolean" />
         <variable
             name="vm"
-            type="scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowVM"/>
+            type="scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowFavVM"/>
     </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:clickable="true"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal">
         <ImageView
-            android:visibility="gone"
             android:tint="@color/colorPrimaryDark"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.10"
             android:src="@drawable/ic_favourite_filled"
-            />
-        <TextView
-            android:textColor="@color/colorPrimaryDark"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0.10"
-            android:textAllCaps="true"
-            android:text="@{vm.mInitialName.substring(0,1)}"
-            tools:text="A"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
             />
         <TextView
             android:layout_marginLeft="10dp"

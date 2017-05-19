@@ -55,7 +55,7 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
                 mGetContactListAPIService.getContactList().subscribe(peopleData ->saveToDB(peopleData),
                         throwable -> Log.d(getClass().getName(), throwable.getMessage())));
 
-        mContactListAdapter = new ContactListAdapter(mContext,mPeopleModel.loadAllContactList());
+        mContactListAdapter = new ContactListAdapter(mContext,mPeopleModel.loadFavoritePeopleList(),mPeopleModel.loadUnFavoritePeopleList());
         mContactListAdapter.notifyDataSetChanged();
     }
 

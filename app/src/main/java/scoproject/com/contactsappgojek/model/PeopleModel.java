@@ -35,11 +35,15 @@ public class PeopleModel extends BaseModel{
 
     @Nullable
     public List<People> loadFavoritePeopleList(){
-        return mEntityDao.queryBuilder().where(PeopleDao.Properties.Favorite.eq(true)).list();
+        return mEntityDao.queryBuilder().where(PeopleDao.Properties.Favorite.eq(true))
+                .orderAsc(PeopleDao.Properties.First_name)
+                .list();
     }
 
     public List<People> loadUnFavoritePeopleList(){
-        return mEntityDao.queryBuilder().where(PeopleDao.Properties.Favorite.eq(false)).list();
+        return mEntityDao.queryBuilder().where(PeopleDao.Properties.Favorite.eq(false))
+                .orderAsc(PeopleDao.Properties.First_name)
+                .list();
     }
 
     public synchronized void save(People people) {
