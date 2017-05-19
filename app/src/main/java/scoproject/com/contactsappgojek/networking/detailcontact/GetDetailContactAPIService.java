@@ -17,16 +17,13 @@ import scoproject.com.contactsappgojek.networking.NetworkService;
 
 public class GetDetailContactAPIService {
     private NetworkService mNetworkService;
-    private int mId;
 
-    public void init(int id){
-        mId = id;
-    }
+
     public GetDetailContactAPIService(NetworkService networkService){
         mNetworkService = networkService;
     }
 
-    public Flowable<People> getContactListById(int id) {
+    public Flowable<People> getContactListById(long id) {
         return mNetworkService.getPeopleById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

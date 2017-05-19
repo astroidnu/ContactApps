@@ -18,5 +18,5 @@ public interface NetworkService {
     Observable<List<People>> getPeopleList();
 
     @GET("/contacts/{id}.json")
-    Observable<People> getPeopleById(@Path("id") int id);
+    Observable<People> getPeopleById(@Path("id") long id);
 }

@@ -31,30 +31,55 @@ public class People implements Parcelable{
     public boolean favorite;
     @SerializedName("url")
     public String url;
+    @SerializedName("phone_number")
+    public String phoneNumber;
+    @SerializedName("email")
+    public String email;
 
 
-    protected People(Parcel in) {
-        id = in.readInt();
-        first_name = in.readString();
-        last_name = in.readString();
-        profile_pic = in.readString();
-        favorite = in.readByte() != 0;
-        url = in.readString();
-    }
-
-    @Generated(hash = 1879578571)
+    @Generated(hash = 2012473941)
     public People(long id, String first_name, String last_name, String profile_pic,
-            boolean favorite, String url) {
+            boolean favorite, String url, String phoneNumber, String email) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.profile_pic = profile_pic;
         this.favorite = favorite;
         this.url = url;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+    
+    protected People(Parcel in) {
+        id = in.readLong();
+        first_name = in.readString();
+        last_name = in.readString();
+        profile_pic = in.readString();
+        favorite = in.readByte() != 0;
+        url = in.readString();
+        phoneNumber = in.readString();
+        email = in.readString();
     }
 
     @Generated(hash = 1406030881)
     public People() {
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(first_name);
+        dest.writeString(last_name);
+        dest.writeString(profile_pic);
+        dest.writeByte((byte) (favorite ? 1 : 0));
+        dest.writeString(url);
+        dest.writeString(phoneNumber);
+        dest.writeString(email);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<People> CREATOR = new Creator<People>() {
@@ -68,21 +93,6 @@ public class People implements Parcelable{
             return new People[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(first_name);
-        dest.writeString(last_name);
-        dest.writeString(profile_pic);
-        dest.writeByte((byte) (favorite ? 1 : 0));
-        dest.writeString(url);
-    }
 
     public long getId() {
         return id;
@@ -134,6 +144,22 @@ public class People implements Parcelable{
 
     public boolean getFavorite() {
         return this.favorite;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
 }

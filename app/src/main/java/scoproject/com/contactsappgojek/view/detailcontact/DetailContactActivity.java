@@ -21,15 +21,16 @@ import scoproject.com.contactsappgojek.viewmodel.detailcontact.DetailContactVM;
 public class DetailContactActivity extends BaseActivity<ActivityDetailContactListBinding, DetailContactVM> {
     private DetailContactComponent mComponent;
     private DetailContactVM mViewModel;
+    private long mPeopleId;
 
     @Override
     protected void onCreateUI(Bundle bundle) {
         setAndBindContentView(bundle, R.layout.activity_detail_contact_list);
-        mViewModel = new DetailContactVM();
+        mPeopleId = getIntent().getLongExtra(Screen.PEOPLE_ID, 0);
+        mViewModel = new DetailContactVM(mPeopleId);
         mComponent.inject(mViewModel);
         mViewModel.takeContext(this);
         binding.setVm(mViewModel);
-
     }
 
     @Override
@@ -39,13 +40,17 @@ public class DetailContactActivity extends BaseActivity<ActivityDetailContactLis
     }
 
     public static class Screen extends ActivityScreen{
-        public Screen(){
+        private static final String PEOPLE_ID = "People Id";
 
+        private long mPeopleId;
+
+        public Screen(long id){
+            this.mPeopleId = id;
         }
 
         @Override
         protected void configureIntent(@NonNull Intent intent) {
-
+            intent.putExtra(PEOPLE_ID, mPeopleId);
         }
 
         @Override

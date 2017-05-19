@@ -28,6 +28,8 @@ public class PeopleDao extends AbstractDao<People, Long> {
         public final static Property Profile_pic = new Property(3, String.class, "profile_pic", false, "PROFILE_PIC");
         public final static Property Favorite = new Property(4, boolean.class, "favorite", false, "FAVORITE");
         public final static Property Url = new Property(5, String.class, "url", false, "URL");
+        public final static Property PhoneNumber = new Property(6, String.class, "phoneNumber", false, "PHONE_NUMBER");
+        public final static Property Email = new Property(7, String.class, "email", false, "EMAIL");
     }
 
 
@@ -48,7 +50,9 @@ public class PeopleDao extends AbstractDao<People, Long> {
                 "\"LAST_NAME\" TEXT," + // 2: last_name
                 "\"PROFILE_PIC\" TEXT," + // 3: profile_pic
                 "\"FAVORITE\" INTEGER NOT NULL ," + // 4: favorite
-                "\"URL\" TEXT);"); // 5: url
+                "\"URL\" TEXT," + // 5: url
+                "\"PHONE_NUMBER\" TEXT," + // 6: phoneNumber
+                "\"EMAIL\" TEXT);"); // 7: email
     }
 
     /** Drops the underlying database table. */
@@ -82,6 +86,16 @@ public class PeopleDao extends AbstractDao<People, Long> {
         if (url != null) {
             stmt.bindString(6, url);
         }
+ 
+        String phoneNumber = entity.getPhoneNumber();
+        if (phoneNumber != null) {
+            stmt.bindString(7, phoneNumber);
+        }
+ 
+        String email = entity.getEmail();
+        if (email != null) {
+            stmt.bindString(8, email);
+        }
     }
 
     @Override
@@ -109,6 +123,16 @@ public class PeopleDao extends AbstractDao<People, Long> {
         if (url != null) {
             stmt.bindString(6, url);
         }
+ 
+        String phoneNumber = entity.getPhoneNumber();
+        if (phoneNumber != null) {
+            stmt.bindString(7, phoneNumber);
+        }
+ 
+        String email = entity.getEmail();
+        if (email != null) {
+            stmt.bindString(8, email);
+        }
     }
 
     @Override
@@ -124,7 +148,9 @@ public class PeopleDao extends AbstractDao<People, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // last_name
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // profile_pic
             cursor.getShort(offset + 4) != 0, // favorite
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // url
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // url
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // phoneNumber
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // email
         );
         return entity;
     }
@@ -137,6 +163,8 @@ public class PeopleDao extends AbstractDao<People, Long> {
         entity.setProfile_pic(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setFavorite(cursor.getShort(offset + 4) != 0);
         entity.setUrl(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setPhoneNumber(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setEmail(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     @Override

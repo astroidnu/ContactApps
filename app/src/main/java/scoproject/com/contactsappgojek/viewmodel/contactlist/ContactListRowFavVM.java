@@ -54,7 +54,7 @@ public class ContactListRowFavVM extends BaseRowVM {
     }
 
     public void onItemClick(){
-        mActivityScreenSwitcher.open(new DetailContactActivity.Screen());
+        mActivityScreenSwitcher.open(new DetailContactActivity.Screen(mPeople.getId()));
     }
 
     @BindingAdapter({"bind:imageUrl"})
