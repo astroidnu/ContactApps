@@ -38,6 +38,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 mPeopleUnFavoriteList.add(people);
             }
         }
+
+        Log.d(getClass().getName(), String.valueOf(mPeopleFavoriteList.size()) + " "+String.valueOf(mPeopleUnFavoriteList.size()));
     }
 
     @Override
@@ -69,8 +71,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     public int getItemViewType(int position) {
         if(position < mPeopleFavoriteList.size())
             return R.layout.item_contact_favorite_list;
-        else if(position == mPeopleFavoriteList.size() + 1)
-            return R.layout.item_section;
+//        else if(position == (mPeopleFavoriteList.size() + 1)
+//            return R.layout.item_section;
         else
             return R.layout.item_contact_list;
     }
