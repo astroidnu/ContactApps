@@ -10,6 +10,7 @@ import java.io.File;
 import dagger.Component;
 import scoproject.com.contactsappgojek.ContactsApp;
 import scoproject.com.contactsappgojek.di.module.AppModule;
+import scoproject.com.contactsappgojek.di.module.AppUIModule;
 import scoproject.com.contactsappgojek.di.module.NetworkModule;
 import scoproject.com.contactsappgojek.di.scope.AppScope;
 import scoproject.com.contactsappgojek.model.PeopleModel;
@@ -20,7 +21,7 @@ import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIS
  */
 @AppScope
 @Component(
-        modules = {AppModule.class, NetworkModule.class}
+        modules = {AppModule.class, NetworkModule.class, AppUIModule.class}
 )
 public interface AppComponent extends IAppComponent {
 
