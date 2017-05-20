@@ -2,9 +2,15 @@ package scoproject.com.contactsappgojek.viewmodel.contactlist;
 
 import android.content.Context;
 import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -12,12 +18,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 import scoproject.com.contactsappgojek.BR;
+import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.adapter.ContactListAdapter;
 import scoproject.com.contactsappgojek.data.People;
 import scoproject.com.contactsappgojek.model.PeopleModel;
 import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIService;
 import scoproject.com.contactsappgojek.ui.base.BaseVM;
+import scoproject.com.contactsappgojek.ui.base.view.ActivityScreenSwitcher;
 import scoproject.com.contactsappgojek.ui.base.view.ViewVM;
+import scoproject.com.contactsappgojek.view.addnewcontact.AddNewContactActivity;
 import scoproject.com.contactsappgojek.view.contactlist.ContactListActivity;
 
 /**
@@ -33,6 +42,8 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
     PeopleModel mPeopleModel;
     @Inject
     Gson gson;
+    @Inject
+    ActivityScreenSwitcher activityScreenSwitcher;
 
 
     public ContactListAdapter mContactListAdapter;
@@ -65,6 +76,22 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
         mContactListAdapter = new ContactListAdapter(mContext,peopleList);
         mContactListAdapter.notifyDataSetChanged();
         setLoading(false);
+    }
+
+    public String titlebar(){
+        return "Contacts";
+    }
+
+    public Drawable iconLeft(){
+        return getContext().getResources().getDrawable(R.drawable.ic_menu);
+    }
+
+    public Drawable iconRight(){
+        return getContext().getResources().getDrawable(R.drawable.ic_search);
+    }
+
+    public void addNewContact(){
+        activityScreenSwitcher.open(new AddNewContactActivity.Screen());
     }
 
     @Bindable

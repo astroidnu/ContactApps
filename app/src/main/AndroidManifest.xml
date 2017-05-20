@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".view.detailcontact.DetailContactActivity"
             android:label="Detail Contact Activity"/>
+        <activity android:name=".view.addnewcontact.AddNewContactActivity"
+            android:label="Add New Contact"/>
     </application>
 
 </manifest>
