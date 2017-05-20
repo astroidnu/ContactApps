@@ -2,6 +2,7 @@ package scoproject.com.contactsappgojek.viewmodel.contactlist;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentProvider;
 import android.content.Context;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
@@ -70,10 +71,8 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
         setLoading(true);
         mProgressDialog.show();
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-        compositeDisposable.add(
-                mGetContactListAPIService.getContactList().subscribe(peopleData ->onSuccess(peopleData),
-                        throwable -> onError()));
-
+        //Checking size database for table people
+        checkingAndSetData();
     }
     public String titlebar(){
         return "Contacts";
@@ -114,10 +113,20 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
     public void onResume() {
         Log.d(getClass().getName(),"OnResume()");
         mProgressDialog.show();
-        compositeDisposable.add(
-                mGetContactListAPIService.getContactList().subscribe(peopleData ->onSuccess(peopleData),
-                        throwable -> onError()));
+        checkingAndSetData();
     }
+
+    private void checkingAndSetData(){
+        if(mPeopleModel.loadAll().size() > 0){
+            onSuccess(mPeopleModel.loadAll());
+        }else{
+            //Load Data from API
+            compositeDisposable.add(
+                    mGetContactListAPIService.getContactList().subscribe(peopleData ->onSuccess(peopleData),
+                            throwable -> onError()));
+        }
+    }
+
     private void onSuccess(List<People> peopleList) {
         if(peopleList.size() > 0){
             setIsContactNull(false);

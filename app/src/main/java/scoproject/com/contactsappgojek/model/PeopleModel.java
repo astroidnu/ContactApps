@@ -46,6 +46,8 @@ public class PeopleModel extends BaseModel{
                 .list();
     }
 
+
+
     public synchronized void save(People people) {
         mEntityDao.insertOrReplace(people);
     }

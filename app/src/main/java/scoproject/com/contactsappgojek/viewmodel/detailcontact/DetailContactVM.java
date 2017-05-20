@@ -21,6 +21,7 @@ import javax.inject.Inject;
 
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.data.People;
+import scoproject.com.contactsappgojek.model.PeopleModel;
 import scoproject.com.contactsappgojek.networking.detailcontact.GetDetailContactAPIService;
 import scoproject.com.contactsappgojek.networking.updatecontact.UpdateContactAPIResponse;
 import scoproject.com.contactsappgojek.networking.updatecontact.UpdateContactAPIService;
@@ -45,6 +46,8 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
     ActivityScreenSwitcher mActivityScreenSwitcher;
     @Inject
     Gson gson;
+    @Inject
+    PeopleModel mPeopleModel;
 
     public ObservableField<String> mFullName = new ObservableField<>();
     public ObservableField<String> mPhoneNumber = new ObservableField<>();
@@ -144,6 +147,9 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
             setFavorite(true);
         }
         if(mPeople != null){
+            //Update locally
+            mPeopleModel.save(mPeople);
+            //Send data to Server
             compositeDisposable.add(
                     mUpdateContactAPIService.updateContact(mPeople.id,mPeople).subscribe(peopleData ->  onSuccess(peopleData),
                             throwable -> onError(throwable)));

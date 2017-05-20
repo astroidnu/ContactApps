@@ -21,6 +21,7 @@ import javax.inject.Inject;
 
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.data.People;
+import scoproject.com.contactsappgojek.model.PeopleModel;
 import scoproject.com.contactsappgojek.networking.addnewcontact.AddNewContactAPIService;
 import scoproject.com.contactsappgojek.networking.addnewcontact.AddNewContactAPIResponse;
 import scoproject.com.contactsappgojek.ui.base.BaseVM;
@@ -41,6 +42,8 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
     AddNewContactAPIService mAddNewContactAPIService;
     @Inject
     Gson gson;
+    @Inject
+    PeopleModel mPeopleModel;
     @Inject
     ActivityScreenSwitcher mActivityScreenSwitcher;
 
@@ -175,6 +178,7 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
 
     private void onSuccess(AddNewContactAPIResponse response){
         if(response.error == null){
+            mPeopleModel.clear();
             mActivityScreenSwitcher.open(new ContactListActivity.Screen());
         }else{
             UIHelper.showToastMessage(getContext(),response.error);
