@@ -5,6 +5,8 @@ import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
+import com.android.databinding.library.baseAdapters.BR;
+
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.ui.base.BaseVM;
 
@@ -14,7 +16,7 @@ import scoproject.com.contactsappgojek.ui.base.BaseVM;
  * Garena Indonesia
  */
 
-public class AddNewContactVM extends BaseVM{
+public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
 
     public ObservableField<String> mFullName = new ObservableField<>();
     public ObservableField<String> mPhoneNumber = new ObservableField<>();
@@ -47,7 +49,7 @@ public class AddNewContactVM extends BaseVM{
     public void onRightToolbarIconClick (){
         super.onRightToolbarIconClick();
         //Submit and save data
-        Log.d(getClass().getName(), "toolbar on right click");
+        onSubmitData();
 
     }
 
@@ -64,4 +66,37 @@ public class AddNewContactVM extends BaseVM{
     }
 
 
+    @Override
+    public void onSubmitData() {
+        if(mFullName.get()!= null){
+            if(mFullName.get().length() < 3){
+                mFullNameError.set("First Name and Last Name should be more than 3 characters");
+            }else{
+                mFullNameError.set("");
+            }
+        }else{
+            mFullNameError.set("Please input first name and last name");
+        }
+
+        if(mPhoneNumber.get()!= null){
+            if(mPhoneNumber.get().length() <10 && mPhoneNumber.get().length() >10){
+                mPhoneNUmberError.set("Phone Number should be of 10 digits");
+            }else{
+                mPhoneNUmberError.set("");
+            }
+        }else{
+            mPhoneNUmberError.set("Please input phone number");
+        }
+
+        if(mEmail.get()!= null){
+            if(!mEmail.get().contains("@")){
+                mEmailError.set("Invalid email format");
+            }else{
+                mEmailError.set("");
+            }
+        }else{
+            mEmailError.set("Please input email");
+        } 
+        notifyPropertyChanged(BR._all);
+    }
 }

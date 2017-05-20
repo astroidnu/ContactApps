@@ -7,5 +7,6 @@ package scoproject.com.contactsappgojek.viewmodel.addnewcontact;
  */
 
 public interface IAddNewContactVM {
+    void onSubmitData();
 
 }
