@@ -1,5 +1,7 @@
 package scoproject.com.contactsappgojek.viewmodel.contactlist;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
@@ -26,6 +28,7 @@ import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIS
 import scoproject.com.contactsappgojek.ui.base.BaseVM;
 import scoproject.com.contactsappgojek.ui.base.view.ActivityScreenSwitcher;
 import scoproject.com.contactsappgojek.ui.base.view.ViewVM;
+import scoproject.com.contactsappgojek.utils.UIHelper;
 import scoproject.com.contactsappgojek.view.addnewcontact.AddNewContactActivity;
 import scoproject.com.contactsappgojek.view.contactlist.ContactListActivity;
 
@@ -50,6 +53,8 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
     public LinearLayoutManager mLinearLayoutManager;
     private List<People> mPeopleList;
     private boolean isLoading = false;
+    private ProgressDialog mProgressDialog;
+    private AlertDialog.Builder mAlertDialog;
 
     private Context mContext;
     public ContactListVM(Context context){
@@ -60,24 +65,15 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
     @Override
     public void onLoad(){
         super.onLoad();
+        mProgressDialog = UIHelper.showProgressDialog(getContext());
         setLoading(true);
+        mProgressDialog.show();
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         compositeDisposable.add(
-                mGetContactListAPIService.getContactList().subscribe(peopleData ->saveToDB(peopleData),
-                        throwable -> Log.d(getClass().getName(), throwable.getMessage())));
+                mGetContactListAPIService.getContactList().subscribe(peopleData ->onSuccess(peopleData),
+                        throwable -> onError()));
 
     }
-
-    @Override
-    public void saveToDB(List<People> peopleList) {
-        for(People people : peopleList){
-            mPeopleModel.save(people);
-        }
-        mContactListAdapter = new ContactListAdapter(mContext,peopleList);
-        mContactListAdapter.notifyDataSetChanged();
-        setLoading(false);
-    }
-
     public String titlebar(){
         return "Contacts";
     }
@@ -108,8 +104,23 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
 
     public void onResume() {
         Log.d(getClass().getName(),"OnResume()");
+        mProgressDialog.show();
         compositeDisposable.add(
-                mGetContactListAPIService.getContactList().subscribe(peopleData ->saveToDB(peopleData),
-                        throwable -> Log.d(getClass().getName(), throwable.getMessage())));
+                mGetContactListAPIService.getContactList().subscribe(peopleData ->onSuccess(peopleData),
+                        throwable -> onError()));
+    }
+    private void onSuccess(List<People> peopleList) {
+        for(People people : peopleList){
+            mPeopleModel.save(people);
+        }
+        mContactListAdapter = new ContactListAdapter(mContext,peopleList);
+        mContactListAdapter.notifyDataSetChanged();
+        mProgressDialog.hide();
+        setLoading(false);
+    }
+
+    private void onError(){
+        mAlertDialog = UIHelper.showAlertDialog(getContext(),"Network Error", "Unable to contact the server");
+        mAlertDialog.show();
     }
 }
