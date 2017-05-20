@@ -57,7 +57,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 ((ItemContactFavoriteListBinding) holder.getDataBinding()).setVm(contactListRowFavVM);
                 break;
             case R.layout.item_contact_list:
-                ContactListRowVM contactListRowVM = new ContactListRowVM(mPeopleUnFavoriteList.get(position - mPeopleFavoriteList.size()),  ((ItemContactListBinding) holder.getDataBinding()));
+                ContactListRowVM contactListRowVM = new ContactListRowVM(mPeopleUnFavoriteList.get((position + 1) - mPeopleFavoriteList.size()),  ((ItemContactListBinding) holder.getDataBinding()));
                 contactListRowVM.takeContext(mContext);
                 ((ItemContactListBinding) holder.getDataBinding()).setVm(contactListRowVM);
                 break;
@@ -71,7 +71,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     public int getItemViewType(int position) {
         if(position < mPeopleFavoriteList.size())
             return R.layout.item_contact_favorite_list;
-//        else if(position == (mPeopleFavoriteList.size() + 1)
+//        else if((mPeopleFavoriteList.size() + 1) == position)
 //            return R.layout.item_section;
         else
             return R.layout.item_contact_list;

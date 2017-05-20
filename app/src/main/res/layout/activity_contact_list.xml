@@ -60,6 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
                 <android.support.v7.widget.RecyclerView
+                    android:scrollbars="vertical"
+                    android:fadeScrollbars="false"
                     android:visibility="@{vm.isContactNull ? View.GONE : View.VISIBLE}"
                     app:adapter="@{vm.mContactListAdapter}"
                     app:layoutManager="@{vm.mLinearLayoutManager}"
