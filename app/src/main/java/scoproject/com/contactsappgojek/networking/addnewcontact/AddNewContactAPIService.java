@@ -22,7 +22,7 @@ public class AddNewContactAPIService {
         mNetworkService = networkService;
     }
 
-    public Flowable<People> addMember(People people) {
+    public Flowable<AddNewContactAPIServiceResponse> addMember(People people) {
         return mNetworkService.postPeople(people)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

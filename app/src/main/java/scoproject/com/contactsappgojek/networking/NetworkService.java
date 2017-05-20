@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import scoproject.com.contactsappgojek.data.People;
+import scoproject.com.contactsappgojek.networking.addnewcontact.AddNewContactAPIServiceResponse;
 
 /**
  * Created by ibnumuzzakkir on 18/05/2017.
@@ -24,5 +25,5 @@ public interface NetworkService {
     Observable<People> getPeopleById(@Path("id") long id);
 
     @POST("/contacts.json")
-    Observable<People> postPeople(@Body People people);
+    Observable<AddNewContactAPIServiceResponse> postPeople(@Body People people);
 }

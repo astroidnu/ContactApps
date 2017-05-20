@@ -105,4 +105,11 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
         isLoading = loading;
         notifyPropertyChanged(BR._all);
     }
+
+    public void onResume() {
+        Log.d(getClass().getName(),"OnResume()");
+        compositeDisposable.add(
+                mGetContactListAPIService.getContactList().subscribe(peopleData ->saveToDB(peopleData),
+                        throwable -> Log.d(getClass().getName(), throwable.getMessage())));
+    }
 }
