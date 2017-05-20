@@ -49,6 +49,7 @@
                     android:layout_alignParentLeft="true">
 
                     <ImageView
+                        tool:src="@drawable/ic_menu"
                         android:onClick="@{()-> appvm.leftIconClick()}"
                         android:id="@+id/com_scoproject_ss_home_back"
                         android:src="@{iconLeft}"
@@ -73,7 +74,6 @@
                     android:textStyle="bold"
                     android:typeface="normal"
                     tool:text="Contacts" />
-
                 <LinearLayout
                     android:id="@+id/layoutfilter"
                     android:layout_width="wrap_content"
@@ -81,6 +81,7 @@
                     android:layout_alignParentRight="true"
                     android:orientation="horizontal">
                     <ImageView
+                        tool:src="@drawable/ic_search"
                         android:onClick="@{()-> appvm.rightIconClick()}"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"

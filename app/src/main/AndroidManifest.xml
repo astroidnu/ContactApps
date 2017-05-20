@@ -19,14 +19,21 @@
         <activity android:name="scoproject.com.contactsappgojek.view.contactlist.ContactListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.detailcontact.DetailContactActivity"
+        <activity
+            android:parentActivityName=".view.contactlist.ContactListActivity"
+            android:name=".view.detailcontact.DetailContactActivity"
             android:label="Detail Contact Activity"/>
-        <activity android:name=".view.addnewcontact.AddNewContactActivity"
+        <activity
+            android:parentActivityName=".view.contactlist.ContactListActivity"
+            android:name=".view.addnewcontact.AddNewContactActivity"
             android:label="Add New Contact"/>
+        <activity
+            android:parentActivityName=".view.contactlist.ContactListActivity"
+            android:name=".view.editcontact.EditContactActivity"
+            android:label="Edit Contact"/>
     </application>
 
 </manifest>
