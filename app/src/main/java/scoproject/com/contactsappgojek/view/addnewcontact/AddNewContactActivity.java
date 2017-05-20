@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
+import java.io.IOException;
 
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.databinding.ActivityAddNewContactBinding;
@@ -29,13 +32,22 @@ public class AddNewContactActivity extends BaseActivity<ActivityAddNewContactBin
         mComponent.inject(mViewModel);
         mViewModel.takeContext(this);
         binding.setVm(mViewModel);
-
     }
 
     @Override
     protected void onCreateComponent(AppComponent appComponent) {
         mComponent = DaggerAddNewContactComponent.builder().appComponent(appComponent).build();
         mComponent.inject(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            mViewModel.onActivityResult(requestCode,resultCode,data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static class Screen extends ActivityScreen {

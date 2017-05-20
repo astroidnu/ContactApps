@@ -1,5 +1,6 @@
 package scoproject.com.contactsappgojek.ui.base;
 
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.os.Bundle;
 
@@ -21,6 +22,9 @@ public final class NoBaseVM extends BaseObservable implements IBaseVM<ViewVM> {
 
     @Override
     public void saveInstanceState(Bundle outState) { }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {}
 
     @Override
     public void detachView() { }

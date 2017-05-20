@@ -1,5 +1,6 @@
 package scoproject.com.contactsappgojek.ui.base;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseArray;
 
 import com.squareup.leakcanary.RefWatcher;
 
@@ -42,6 +44,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends IBaseVM>
     @Inject
     ActivityScreenSwitcher activityScreenSwitcher;
 
+    private SparseArray<ResultCallback> mResultCallbacks;
     protected abstract void onCreateUI(Bundle bundle);
     protected abstract void onCreateComponent(AppComponent appComponent);
 
@@ -81,7 +84,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends IBaseVM>
     protected final void setAndBindContentView(@Nullable Bundle savedInstanceState, @LayoutRes int layoutResID) {
         binding = DataBindingUtil.setContentView(this, layoutResID);
         binding.setVariable(BR.vm, viewModel);
-
+//
 //        try {
 //            //noinspection unchecked
 //            viewModel.attachView((ViewVM) this, savedInstanceState);
@@ -110,5 +113,9 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends IBaseVM>
 
     public String string(@StringRes int resId) {
         return getResources().getString(resId);
+    }
+
+    public interface ResultCallback {
+        public void onResult(int resultCode, Intent data);
     }
 }

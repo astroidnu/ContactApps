@@ -1,6 +1,7 @@
 package scoproject.com.contactsappgojek.ui.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.generated.callback.OnClickListener;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
+import java.io.IOException;
 
 import io.reactivex.disposables.CompositeDisposable;
 import scoproject.com.contactsappgojek.ui.base.view.ViewVM;
@@ -90,6 +93,7 @@ public abstract class BaseVM <V extends ViewVM, T extends Context> extends BaseO
 
     protected  View.OnClickListener rightClick;
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) throws IOException {}
 
     public void clearCompositeDisposable() {
         compositeDisposable.clear();

@@ -1,14 +1,25 @@
 package scoproject.com.contactsappgojek.viewmodel.addnewcontact;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.ObservableField;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.android.databinding.library.baseAdapters.BR;
 
+import java.io.File;
+import java.io.IOException;
+
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.ui.base.BaseVM;
+import scoproject.com.contactsappgojek.utils.FileUtil;
 
 /**
  * Created by ibnumuzzakkir on 18/05/2017.
@@ -62,7 +73,32 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
     }
 
     public void photoOnClick(){
-        Log.d(getClass().getName(), "PhotoOnClick()");
+        //Checking Permssion
+        if(Build.VERSION.SDK_INT == Build.VERSION_CODES.M){
+            if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                selectImage();
+            }else{
+                ActivityCompat.requestPermissions(((Activity)getContext()), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+            }
+        }else{
+            selectImage();
+        }
+    }
+
+    private void selectImage(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        ((Activity)getContext()).startActivityForResult(intent,1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) throws IOException {
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode == 1){
+            final File actualImage = FileUtil.from(getContext(), data.getData());
+            Log.d(getClass().getName(), String.valueOf(actualImage));
+        }
+
     }
 
 
@@ -96,7 +132,7 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
             }
         }else{
             mEmailError.set("Please input email");
-        } 
+        }
         notifyPropertyChanged(BR._all);
     }
 }
