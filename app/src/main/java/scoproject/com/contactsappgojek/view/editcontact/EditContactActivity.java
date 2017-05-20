@@ -62,7 +62,7 @@ public class EditContactActivity extends BaseActivity<ActivityEditContactBinding
 
         @Override
         protected Class<? extends Activity> activityClass() {
-            return ContactListActivity.class;
+            return EditContactActivity.class;
         }
     }
 }

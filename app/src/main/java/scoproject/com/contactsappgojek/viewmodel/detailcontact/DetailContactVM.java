@@ -25,8 +25,10 @@ import scoproject.com.contactsappgojek.networking.detailcontact.GetDetailContact
 import scoproject.com.contactsappgojek.networking.updatecontact.UpdateContactAPIResponse;
 import scoproject.com.contactsappgojek.networking.updatecontact.UpdateContactAPIService;
 import scoproject.com.contactsappgojek.ui.base.BaseVM;
+import scoproject.com.contactsappgojek.ui.base.view.ActivityScreenSwitcher;
 import scoproject.com.contactsappgojek.utils.UIHelper;
 import scoproject.com.contactsappgojek.view.contactlist.ContactListActivity;
+import scoproject.com.contactsappgojek.view.editcontact.EditContactActivity;
 
 /**
  * Created by ibnumuzzakkir on 18/05/2017.
@@ -39,6 +41,8 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
     GetDetailContactAPIService mGetDetailContactAPIService;
     @Inject
     UpdateContactAPIService mUpdateContactAPIService;
+    @Inject
+    ActivityScreenSwitcher mActivityScreenSwitcher;
     @Inject
     Gson gson;
 
@@ -121,7 +125,7 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
     }
 
     public void onEditMenuClick(){
-        Log.d(getClass().getName(), "onEditMenuClick()");
+        mActivityScreenSwitcher.open(new EditContactActivity.Screen());
     }
 
     public void onIconEmailClick(){
