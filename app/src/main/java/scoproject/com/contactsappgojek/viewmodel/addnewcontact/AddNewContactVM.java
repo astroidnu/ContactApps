@@ -1,11 +1,12 @@
 package scoproject.com.contactsappgojek.viewmodel.addnewcontact;
 
+import android.app.Activity;
 import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.ui.base.BaseVM;
-import scoproject.com.contactsappgojek.view.addnewcontact.AddNewContactActivity;
 
 /**
  * Created by ibnumuzzakkir on 18/05/2017.
@@ -18,6 +19,9 @@ public class AddNewContactVM extends BaseVM{
     public ObservableField<String> mFullName = new ObservableField<>();
     public ObservableField<String> mPhoneNumber = new ObservableField<>();
     public ObservableField<String> mEmail = new ObservableField<>();
+    public ObservableField<String> mFullNameError = new ObservableField<>();
+    public ObservableField<String> mPhoneNUmberError = new ObservableField<>();
+    public ObservableField<String> mEmailError = new ObservableField<>();
 
     public AddNewContactVM(){
     }
@@ -38,4 +42,26 @@ public class AddNewContactVM extends BaseVM{
     public Drawable iconRight(){
         return getContext().getResources().getDrawable(R.drawable.ic_save);
     }
+
+    @Override
+    public void onRightToolbarIconClick (){
+        super.onRightToolbarIconClick();
+        //Submit and save data
+        Log.d(getClass().getName(), "toolbar on right click");
+
+    }
+
+    @Override
+    public void onLeftToolbarIconClick (){
+        super.onLeftToolbarIconClick();
+        //Finish Activity
+        ((Activity) getContext()).finish();
+
+    }
+
+    public void photoOnClick(){
+        Log.d(getClass().getName(), "PhotoOnClick()");
+    }
+
+
 }

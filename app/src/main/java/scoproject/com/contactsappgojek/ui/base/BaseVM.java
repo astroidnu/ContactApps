@@ -2,10 +2,14 @@ package scoproject.com.contactsappgojek.ui.base;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
+import android.databinding.generated.callback.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 
 import io.reactivex.disposables.CompositeDisposable;
 import scoproject.com.contactsappgojek.ui.base.view.ViewVM;
@@ -50,10 +54,19 @@ public abstract class BaseVM <V extends ViewVM, T extends Context> extends BaseO
         }
     }
 
-    protected void onLoad() {
+    protected void onLoad() {}
+
+    protected void onRightToolbarIconClick(){}
+
+    protected void onLeftToolbarIconClick(){}
+
+    public void rightIconClick(){
+        onRightToolbarIconClick();
     }
 
-
+    public void leftIconClick(){
+        onLeftToolbarIconClick();
+    }
 
     protected void restoreInstanceState(@NonNull Bundle savedInstanceState) { }
 
@@ -74,6 +87,9 @@ public abstract class BaseVM <V extends ViewVM, T extends Context> extends BaseO
     public final T getContext() {
         return context;
     }
+
+    protected  View.OnClickListener rightClick;
+
 
     public void clearCompositeDisposable() {
         compositeDisposable.clear();

@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 import scoproject.com.contactsappgojek.BR;
 import scoproject.com.contactsappgojek.ContactsApp;
+import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.di.component.AppComponent;
 import scoproject.com.contactsappgojek.ui.base.view.ActivityScreenSwitcher;
 import scoproject.com.contactsappgojek.ui.base.view.ViewVM;
