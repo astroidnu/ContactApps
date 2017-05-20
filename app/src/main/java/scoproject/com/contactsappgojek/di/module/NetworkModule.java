@@ -23,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import scoproject.com.contactsappgojek.BuildConfig;
 import scoproject.com.contactsappgojek.di.scope.AppScope;
 import scoproject.com.contactsappgojek.networking.NetworkService;
+import scoproject.com.contactsappgojek.networking.addnewcontact.AddNewContactAPIService;
 import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIService;
 import scoproject.com.contactsappgojek.networking.detailcontact.GetDetailContactAPIService;
 
@@ -75,6 +76,12 @@ public class NetworkModule {
     @AppScope
     public GetDetailContactAPIService provideGetDetailContactAPIService(NetworkService mNetworkService){
         return  new GetDetailContactAPIService(mNetworkService);
+    }
+
+    @Provides
+    @AppScope
+    public AddNewContactAPIService provideAddNewContactAPIService(NetworkService mNetworkService){
+        return  new AddNewContactAPIService(mNetworkService);
     }
 
     private OkHttpClient getUnsafeOkHttpClient() {

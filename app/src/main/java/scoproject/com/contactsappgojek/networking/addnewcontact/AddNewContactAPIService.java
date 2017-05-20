@@ -6,6 +6,7 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import scoproject.com.contactsappgojek.data.People;
 import scoproject.com.contactsappgojek.networking.NetworkService;
 
 /**
@@ -21,16 +22,13 @@ public class AddNewContactAPIService {
         mNetworkService = networkService;
     }
 
-//    public Flowable<AddNewContactReponse> addMember() {
-//
-//        return mNetworkService.addMember(member)
-//                .doOnSubscribe(disposable -> isRequestingAddMemberService = true)
-//                .doOnTerminate(() -> isRequestingAddMemberService = false)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnError(this::handleAccountError)
-//                .toFlowable(BackpressureStrategy.BUFFER);
-//    }
+    public Flowable<People> addMember(People people) {
+        return mNetworkService.postPeople(people)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(this::handleAccountError)
+                .toFlowable(BackpressureStrategy.BUFFER);
+    }
 
     private void handleAccountError(Throwable throwable) {
         Log.e(getClass().getName(), throwable.getMessage());

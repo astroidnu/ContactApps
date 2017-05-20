@@ -1,9 +1,12 @@
 package scoproject.com.contactsappgojek.networking;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import scoproject.com.contactsappgojek.data.People;
 
@@ -19,4 +22,7 @@ public interface NetworkService {
 
     @GET("/contacts/{id}.json")
     Observable<People> getPeopleById(@Path("id") long id);
+
+    @POST("/contacts.json")
+    Observable<People> postPeople(@Body People people);
 }
