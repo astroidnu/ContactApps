@@ -22,7 +22,11 @@ import javax.inject.Inject;
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.data.People;
 import scoproject.com.contactsappgojek.networking.detailcontact.GetDetailContactAPIService;
+import scoproject.com.contactsappgojek.networking.updatecontact.UpdateContactAPIResponse;
+import scoproject.com.contactsappgojek.networking.updatecontact.UpdateContactAPIService;
 import scoproject.com.contactsappgojek.ui.base.BaseVM;
+import scoproject.com.contactsappgojek.utils.UIHelper;
+import scoproject.com.contactsappgojek.view.contactlist.ContactListActivity;
 
 /**
  * Created by ibnumuzzakkir on 18/05/2017.
@@ -33,7 +37,8 @@ import scoproject.com.contactsappgojek.ui.base.BaseVM;
 public class DetailContactVM extends BaseVM implements IDetailContact{
     @Inject
     GetDetailContactAPIService mGetDetailContactAPIService;
-
+    @Inject
+    UpdateContactAPIService mUpdateContactAPIService;
     @Inject
     Gson gson;
 
@@ -67,6 +72,11 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
     @Override
     public void setContactDetailData(People people) {
         mPeople = people;
+        if(mPeople.favorite){
+            setFavorite(true);
+        }else{
+            setFavorite(false);
+        }
         mFullName.set(people.first_name + " " + people.last_name);
         mEmail.set(people.email);
         mPhoneNumber.set(people.phoneNumber);
@@ -124,14 +134,23 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
         //Set Favorite and update data to API
         if(isFavorite()){
             setFavorite(false);
+            mPeople.setFavorite(false);
         }else{
+            mPeople.setFavorite(true);
             setFavorite(true);
         }
-        notifyPropertyChanged(BR._all);
+        if(mPeople != null){
+            compositeDisposable.add(
+                    mUpdateContactAPIService.updateContact(mPeople.id,mPeople).subscribe(peopleData ->  onSuccess(peopleData),
+                            throwable -> onError(throwable)));
+        }else{
+            Log.d(getClass().getName(), "People Object must be not null");
+        }
     }
 
     public void setFavorite(boolean isFavorite){
         mIsFavorite = isFavorite;
+        notifyPropertyChanged(BR._all);
     }
 
     public boolean isFavorite(){
@@ -144,6 +163,18 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
                 .load(imageUrl)
                 .placeholder(R.drawable.ic_betty_allen)
                 .into(view);
+    }
+
+    private void onSuccess(UpdateContactAPIResponse response) {
+        if(response.error == null){
+            UIHelper.showToastMessage(getContext(), "Successfully update contact");
+        }else{
+            UIHelper.showToastMessage(getContext(),response.error);
+        }
+    }
+
+    private void onError(Throwable throwable) {
+        UIHelper.showToastMessage(getContext(),throwable.getMessage());
     }
 
 }

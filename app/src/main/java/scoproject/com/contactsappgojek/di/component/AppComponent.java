@@ -17,7 +17,7 @@ import scoproject.com.contactsappgojek.model.PeopleModel;
 import scoproject.com.contactsappgojek.networking.addnewcontact.AddNewContactAPIService;
 import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIService;
 import scoproject.com.contactsappgojek.networking.detailcontact.GetDetailContactAPIService;
-import scoproject.com.contactsappgojek.networking.updatecontact.UpdateContactAPIResponse;
+import scoproject.com.contactsappgojek.networking.updatecontact.UpdateContactAPIService;
 
 /**
  * Created by ibnumuzzakkir on 5/18/17.
@@ -46,7 +46,7 @@ public interface AppComponent extends IAppComponent {
     GetContactListAPIService getContactListApiService();
     GetDetailContactAPIService getDetailContactApiService();
     AddNewContactAPIService addNewContactApiService();
-    UpdateContactAPIResponse updateContactApiResponse();
+    UpdateContactAPIService updateContactApiService();
 
     //Model
     PeopleModel getPeopleModel();
