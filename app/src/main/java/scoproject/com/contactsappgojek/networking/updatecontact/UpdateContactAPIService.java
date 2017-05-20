@@ -1,4 +1,4 @@
-package scoproject.com.contactsappgojek.networking.addnewcontact;
+package scoproject.com.contactsappgojek.networking.updatecontact;
 
 import android.util.Log;
 
@@ -10,20 +10,18 @@ import scoproject.com.contactsappgojek.data.People;
 import scoproject.com.contactsappgojek.networking.NetworkService;
 
 /**
- * Created by ibnumuzzakkir on 18/05/2017.
- * Android Developer
- * Garena Indonesia
+ * Created by ibnumuzzakkir on 5/20/17.
  */
 
-public class AddNewContactAPIService {
+public class UpdateContactAPIService {
     private NetworkService mNetworkService;
 
-    public AddNewContactAPIService(NetworkService networkService){
+    public UpdateContactAPIService(NetworkService networkService){
         mNetworkService = networkService;
     }
 
-    public Flowable<AddNewContactAPIResponse> addContact(People people) {
-        return mNetworkService.postPeople(people)
+    public Flowable<UpdateContactAPIResponse> updateContact(long id, People people) {
+        return mNetworkService.updatePeople(id, people)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(this::handleAccountError)

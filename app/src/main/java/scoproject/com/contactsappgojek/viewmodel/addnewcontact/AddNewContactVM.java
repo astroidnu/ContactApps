@@ -5,13 +5,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.ObservableField;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.google.gson.Gson;
@@ -24,7 +22,7 @@ import javax.inject.Inject;
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.data.People;
 import scoproject.com.contactsappgojek.networking.addnewcontact.AddNewContactAPIService;
-import scoproject.com.contactsappgojek.networking.addnewcontact.AddNewContactAPIServiceResponse;
+import scoproject.com.contactsappgojek.networking.addnewcontact.AddNewContactAPIResponse;
 import scoproject.com.contactsappgojek.ui.base.BaseVM;
 import scoproject.com.contactsappgojek.ui.base.view.ActivityScreenSwitcher;
 import scoproject.com.contactsappgojek.utils.FileUtil;
@@ -169,13 +167,13 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
         People peopleCheckData = gson.fromJson(dataSend, People.class);
         if(peopleCheckData.getFirst_name() != null && peopleCheckData.getEmail() != null && peopleCheckData.getPhoneNumber()!=null){
             compositeDisposable.add(
-                    mAddNewContactAPIService.addMember(peopleCheckData).subscribe(peopleData ->  onSuccess(peopleData),
+                    mAddNewContactAPIService.addContact(peopleCheckData).subscribe(peopleData ->  onSuccess(peopleData),
                             throwable -> onError(throwable)));
         }
         notifyPropertyChanged(BR._all);
     }
 
-    private void onSuccess(AddNewContactAPIServiceResponse response){
+    private void onSuccess(AddNewContactAPIResponse response){
         if(response.error == null){
             mActivityScreenSwitcher.open(new ContactListActivity.Screen());
         }else{

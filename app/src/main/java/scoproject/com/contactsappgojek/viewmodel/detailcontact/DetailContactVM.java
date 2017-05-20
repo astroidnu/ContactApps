@@ -9,9 +9,11 @@ import android.databinding.ObservableField;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
@@ -41,6 +43,7 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
 
     private long mPeopleId;
     private People mPeople;
+    public boolean mIsFavorite;
 
     private ClipboardManager myClipboard;
     private ClipData myClip;
@@ -118,7 +121,21 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
     }
 
     public void onFavoriteClick(){
-        Log.d(getClass().getName(), "onFavoriteClick()");
+        //Set Favorite and update data to API
+        if(isFavorite()){
+            setFavorite(false);
+        }else{
+            setFavorite(true);
+        }
+        notifyPropertyChanged(BR._all);
+    }
+
+    public void setFavorite(boolean isFavorite){
+        mIsFavorite = isFavorite;
+    }
+
+    public boolean isFavorite(){
+        return mIsFavorite;
     }
 
     @BindingAdapter({"bind:imageUrl"})
@@ -128,4 +145,5 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
                 .placeholder(R.drawable.ic_betty_allen)
                 .into(view);
     }
+
 }

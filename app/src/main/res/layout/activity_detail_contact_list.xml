@@ -49,16 +49,26 @@
                         android:layout_height="wrap_content"
                         tool:text="Betty Allen"/>
                     <LinearLayout
+                        android:paddingTop="5dp"
                         android:gravity="right"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <ImageButton
+                            android:visibility="@{vm.isFavorite ? View.GONE : View.VISIBLE}"
                             android:onClick="@{()->vm.onFavoriteClick()}"
                             android:backgroundTint="@android:color/transparent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_favourite"/>
+                        <ImageButton
+                            tool:visibility="gone"
+                            android:visibility="@{vm.isFavorite ? View.VISIBLE : View.GONE}"
+                            android:onClick="@{()->vm.onFavoriteClick()}"
+                            android:backgroundTint="@android:color/transparent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_favourite_filled"/>
                         <ImageButton
                             android:onClick="@{()->vm.onEditMenuClick()}"
                             android:backgroundTint="@android:color/transparent"
@@ -129,7 +139,7 @@
                         </LinearLayout>
                         <ImageButton
                             android:onClick="@{()->vm.onMessageClick()}"
-                            android:layout_marginTop="26px"
+                            android:layout_marginTop="27px"
                             android:layout_marginLeft="16px"
                             android:layout_marginRight="16px"
                             android:layout_alignParentRight="true"
