@@ -53,6 +53,7 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
     public LinearLayoutManager mLinearLayoutManager;
     private List<People> mPeopleList;
     private boolean isLoading = false;
+    private boolean isContactNull = false;
     private ProgressDialog mProgressDialog;
     private AlertDialog.Builder mAlertDialog;
 
@@ -90,6 +91,14 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
         activityScreenSwitcher.open(new AddNewContactActivity.Screen());
     }
 
+
+    @Bindable
+    public boolean isContactNull(){return isContactNull;}
+
+    public void setIsContactNull(boolean isContactNull){
+        this.isContactNull = isContactNull;
+    }
+
     @Bindable
     @Override
     public boolean isLoading() {
@@ -110,13 +119,20 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
                         throwable -> onError()));
     }
     private void onSuccess(List<People> peopleList) {
-        for(People people : peopleList){
-            mPeopleModel.save(people);
+        if(peopleList.size() > 0){
+            setIsContactNull(false);
+            for(People people : peopleList){
+                mPeopleModel.save(people);
+            }
+            mContactListAdapter = new ContactListAdapter(mContext,peopleList);
+            mContactListAdapter.notifyDataSetChanged();
+        }else{
+            setIsContactNull(true);
         }
-        mContactListAdapter = new ContactListAdapter(mContext,peopleList);
-        mContactListAdapter.notifyDataSetChanged();
+
         mProgressDialog.hide();
         setLoading(false);
+        notifyPropertyChanged(BR._all);
     }
 
     private void onError(){

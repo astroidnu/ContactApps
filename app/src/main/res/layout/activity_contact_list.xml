@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="titlebar"
             type="String"/>
@@ -58,10 +60,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
                 <android.support.v7.widget.RecyclerView
+                    android:visibility="@{vm.isContactNull ? View.GONE : View.VISIBLE}"
                     app:adapter="@{vm.mContactListAdapter}"
                     app:layoutManager="@{vm.mLinearLayoutManager}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+                <TextView
+                    android:visibility="@{vm.isContactNull ? View.VISIBLE : View.GONE}"
+                    tools:visibility="gone"
+                    android:textSize="16sp"
+                    android:layout_centerInParent="true"
+                    android:text="No Contacts Found"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
         </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>
