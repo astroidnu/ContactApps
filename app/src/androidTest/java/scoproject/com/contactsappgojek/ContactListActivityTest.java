@@ -29,10 +29,6 @@ public class ContactListActivityTest {
     public ActivityTestRule<ContactListActivity> mActivityRule =
             new ActivityTestRule<>(ContactListActivity.class);
 
-//    @Test
-//    public void checkAllComponentContactPage(){
-//        onView(anyOf(withId(R.id.btn_add_new_contact),withId(R.id.recycle_contact_list))).check(matches(isDisplayed()));
-//    }
 
     @Test
     public void checkContactList(){

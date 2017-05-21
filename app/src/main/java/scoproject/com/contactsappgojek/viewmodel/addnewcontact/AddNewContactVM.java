@@ -134,17 +134,19 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
             if(mFullName.get().length() < 3){
                 mFullNameError.set("First Name and Last Name should be more than 3 characters");
             }else{
-                try{
-                    String[] mFullNameSplit = mFullName.get().split(" ");
-                    if(mFullNameSplit.length > 1){
-                        people.setFirst_name(mFullNameSplit[0]);
-                        people.setLast_name(mFullNameSplit[1]);
-                        mFullNameError.set("");
-                    }else{
+                if(isValidName(mFullName.get())){
+                    try{
+                        String[] mFullNameSplit = mFullName.get().split(" ");
+                        if(mFullNameSplit.length > 1){
+                            people.setFirst_name(mFullNameSplit[0]);
+                            people.setLast_name(mFullNameSplit[1]);
+                            mFullNameError.set("");
+                        }else{
+                            mFullNameError.set("Name must be contains first and last");
+                        }
+                    }catch (NullPointerException e){
                         mFullNameError.set("Name must be contains first and last");
                     }
-                }catch (NullPointerException e){
-                    mFullNameError.set("Name must be contains first and last");
                 }
             }
         }else{
@@ -179,7 +181,15 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
         notifyPropertyChanged(BR._all);
     }
 
-    private boolean isValidMobile(String phone) {
+    public boolean isValidName(String name){
+        if(name.length() < 3){
+            mFullNameError.set("First Name and Last Name should be more than 3 characters");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    public boolean isValidMobile(String phone) {
         boolean check=false;
         if(!Pattern.matches("[a-zA-Z]+", phone)) {
             if(!(phone.length() >= 10 && phone.length() <=11)) {
@@ -196,7 +206,7 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
         return check;
     }
 
-    private boolean isValidMail(String email) {
+    public boolean isValidMail(String email) {
         boolean check;
         Pattern p;
         Matcher m;

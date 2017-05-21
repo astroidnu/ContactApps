@@ -58,10 +58,7 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
     private ProgressDialog mProgressDialog;
     private AlertDialog.Builder mAlertDialog;
 
-    private Context mContext;
-    public ContactListVM(Context context){
-        mContext = context;
-        Log.d(getClass().getName(), "ContactList Constructor");
+    public ContactListVM(){
     }
 
     @Override
@@ -70,7 +67,7 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
         mProgressDialog = UIHelper.showProgressDialog(getContext());
         setLoading(true);
         mProgressDialog.show();
-        mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         //Checking size database for table people
         checkingAndSetData();
     }
@@ -116,7 +113,7 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
         checkingAndSetData();
     }
 
-    private void checkingAndSetData(){
+    public void checkingAndSetData(){
         if(mPeopleModel.loadAll().size() > 0){
             onSuccess(mPeopleModel.loadAll());
         }else{
@@ -127,13 +124,13 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
         }
     }
 
-    private void onSuccess(List<People> peopleList) {
+    public void onSuccess(List<People> peopleList) {
         if(peopleList.size() > 0){
-            setIsContactNull(false);
+            setIsContactNull(true);
             for(People people : peopleList){
                 mPeopleModel.save(people);
             }
-            mContactListAdapter = new ContactListAdapter(mContext,peopleList);
+            mContactListAdapter = new ContactListAdapter(getContext(),peopleList);
             mContactListAdapter.notifyDataSetChanged();
         }else{
             setIsContactNull(true);
@@ -144,7 +141,7 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
         notifyPropertyChanged(BR._all);
     }
 
-    private void onError(){
+    public void onError(){
         mAlertDialog = UIHelper.showAlertDialog(getContext(),"Network Error", "Unable to contact the server");
         mAlertDialog.show();
     }

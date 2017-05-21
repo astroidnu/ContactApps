@@ -33,7 +33,7 @@ public class ContactListActivity extends BaseActivity<ActivityContactListBinding
     @Override
     protected void onCreateUI(Bundle bundle) {
         setAndBindContentView(bundle,R.layout.activity_contact_list);
-        mContactListVM = new ContactListVM(this);
+        mContactListVM = new ContactListVM();
         mComponent.inject(mContactListVM);
         mContactListVM.takeContext(this);
         binding.setVm(mContactListVM);
