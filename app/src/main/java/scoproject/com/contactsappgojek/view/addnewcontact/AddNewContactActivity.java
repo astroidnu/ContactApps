@@ -50,6 +50,12 @@ public class AddNewContactActivity extends BaseActivity<ActivityAddNewContactBin
         }
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        mViewModel.onDestroy();
+    }
+
     public static class Screen extends ActivityScreen {
 
 

@@ -230,4 +230,14 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
         mAlertDialog.hide();
         UIHelper.showToastMessage(getContext(), throwable.getMessage().toString());
     }
+
+    public void onDestroy() {
+        try {
+          if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            mAlertDialog.dismiss();
+          }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -195,4 +195,15 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
         UIHelper.showToastMessage(getContext(),throwable.getMessage());
     }
 
+    public void onDestroy() {
+        try {
+            if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                mAlertDialog.dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

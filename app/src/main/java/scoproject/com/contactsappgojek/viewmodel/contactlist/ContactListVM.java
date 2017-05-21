@@ -148,4 +148,5 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
         mAlertDialog = UIHelper.showAlertDialog(getContext(),"Network Error", "Unable to contact the server");
         mAlertDialog.show();
     }
+
 }

@@ -39,6 +39,12 @@ public class DetailContactActivity extends BaseActivity<ActivityDetailContactLis
         mComponent.inject(this);
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        mViewModel.onDestroy();
+    }
+
     public static class Screen extends ActivityScreen{
         private static final String PEOPLE_ID = "People Id";
 

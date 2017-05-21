@@ -52,6 +52,12 @@ public class ContactListActivity extends BaseActivity<ActivityContactListBinding
         mComponent.inject(this);
     }
 
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+    }
+
     public static class Screen extends ActivityScreen {
 
 
