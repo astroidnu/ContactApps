@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.databinding.library.baseAdapters.BR;
@@ -146,7 +147,8 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
         }
 
         if(mPhoneNumber.get()!= null){
-            if(mPhoneNumber.get().length() == 9){
+            String regexStr = "^[+]?[0-9]{12,15}$";
+            if(!TextUtils.isEmpty(mPhoneNUmberError.get()) && mPhoneNumber.get().matches(regexStr) && mPhoneNumber.get().length() == 9){
                 mPhoneNUmberError.set("Phone Number should be of 10 digits");
             }else{
                 people.setPhoneNumber(mPhoneNumber.get());
@@ -157,7 +159,7 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
         }
 
         if(mEmail.get()!= null){
-            if(!mEmail.get().contains("@")){
+            if(!TextUtils.isEmpty(mEmail.get()) && android.util.Patterns.EMAIL_ADDRESS.matcher(mEmail.get()).matches()){
                 mEmailError.set("Invalid email format");
             }else{
                 people.setEmail(mEmail.get());
