@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
@@ -16,64 +17,62 @@
     </data>
     <LinearLayout
         android:onClick="@{()->vm.onItemClick()}"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="16px"
-        android:layout_marginBottom="16px"
-        android:clickable="true"
-        android:orientation="horizontal">
-        <ImageView
-            android:visibility="gone"
-            android:tint="@color/colorPrimaryDark"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0.10"
-            android:src="@drawable/ic_favourite_filled"
-            />
-        <TextView
-            android:textColor="@color/colorPrimaryDark"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0.10"
-            android:textAllCaps="true"
-            android:text="@{isIndex ? vm.mInitialName.substring(0,1) : @string/empty}"
-            tools:text="A"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            />
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:text="@{vm.mInitialName.substring(0,1)}"
-            tools:text="A"
-            android:textAllCaps="true"
-            android:textSize="20sp"
-            android:background="@drawable/rounded_textview"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="0.15"
-            android:layout_height="wrap_content" />
-        <ImageView
-            app:imageUrl="@{vm.urlPhoto}"
-            android:id="@+id/itemImage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_weight="0.15" />
-        <TextView
-            android:id="@+id/itemTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|right"
-            android:layout_marginLeft="10dp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:layout_weight="0.70"
-            android:text="@={vm.mFullName}"
-            tools:text="Person Name"
-            android:textAppearance="?android:attr/textAppearanceListItem" />
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:id="@+id/contact_list_alphabet_icon_first"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/colorPrimaryDark"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAllCaps="true"
+                    android:text="@{isIndex ? vm.mInitialName.substring(0,1) : @string/empty}"
+                    tools:text="A"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textStyle="bold"
+                    />
+            </LinearLayout>
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/contact_list_alphabet_icon"
+                android:layout_toRightOf="@+id/contact_list_alphabet_icon_first"
+                android:layout_marginLeft="32dp"
+                tools:text="A"
+                android:text="@{vm.mInitialName.substring(0,1)}"
+                android:textAllCaps="true"
+                android:textSize="20sp"
+                android:background="@drawable/rounded_textview"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/contact_list_alphabet_icon"
+                android:id="@+id/itemTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:layout_marginLeft="16dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@={vm.mFullName}"
+                tools:text="Person Name"
+                android:textAppearance="?android:attr/textAppearanceListItem" />
+        </RelativeLayout>
     </LinearLayout>
 </layout>

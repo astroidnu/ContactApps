@@ -50,11 +50,10 @@
             android:layout_height="wrap_content"
             app:fabSize="normal"
             android:onClick="@{()-> vm.addNewContact()}"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_margin="16dp"
             android:layout_gravity="bottom|right"
             android:scaleType="center"
-            app:backgroundTint="@color/colorPrimaryDark"
+            app:backgroundTint="@color/colorPrimary"
             android:src="@drawable/ic_add_contacts"/>
         <RelativeLayout
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -68,7 +67,10 @@
                     app:adapter="@{vm.mContactListAdapter}"
                     app:layoutManager="@{vm.mLinearLayoutManager}"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
                 <TextView
                     android:visibility="@{vm.isContactNull ? View.VISIBLE : View.GONE}"
                     tools:visibility="gone"
