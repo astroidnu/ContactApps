@@ -2,6 +2,7 @@ package scoproject.com.contactsappgojek.viewmodel.addnewcontact;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.ObservableField;
@@ -17,6 +18,8 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -55,11 +58,14 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
     public ObservableField<String> mPhoneNUmberError = new ObservableField<>();
     public ObservableField<String> mEmailError = new ObservableField<>();
 
+    private AlertDialog mAlertDialog;
+
     public AddNewContactVM(){
     }
     @Override
     public void onLoad(){
         super.onLoad();
+        mAlertDialog = UIHelper.showProgressDialog(getContext());
     }
 
 
@@ -133,35 +139,29 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
                     if(mFullNameSplit.length > 1){
                         people.setFirst_name(mFullNameSplit[0]);
                         people.setLast_name(mFullNameSplit[1]);
+                        mFullNameError.set("");
                     }else{
-                        people.setFirst_name(mFullNameSplit[0]);
-                        people.setLast_name("");
+                        mFullNameError.set("Name must be contains first and last");
                     }
                 }catch (NullPointerException e){
-                    Log.e(getClass().getName(),e.getMessage());
+                    mFullNameError.set("Name must be contains first and last");
                 }
-                mFullNameError.set("");
             }
         }else{
             mFullNameError.set("Please input name");
         }
 
         if(mPhoneNumber.get()!= null){
-            String regexStr = "^[+]?[0-9]{12,15}$";
-            if(!TextUtils.isEmpty(mPhoneNUmberError.get()) && mPhoneNumber.get().matches(regexStr) && mPhoneNumber.get().length() == 9){
-                mPhoneNUmberError.set("Phone Number should be of 10 digits");
-            }else{
-                people.setPhoneNumber(mPhoneNumber.get());
-                mPhoneNUmberError.set("");
-            }
+           if(isValidMobile(mPhoneNumber.get())){
+               people.setPhoneNumber(mPhoneNumber.get());
+               mPhoneNUmberError.set("");
+           }
         }else{
             mPhoneNUmberError.set("Please input phone number");
         }
 
         if(mEmail.get()!= null){
-            if(!TextUtils.isEmpty(mEmail.get()) && android.util.Patterns.EMAIL_ADDRESS.matcher(mEmail.get()).matches()){
-                mEmailError.set("Invalid email format");
-            }else{
+            if(isValidMail(mEmail.get())){
                 people.setEmail(mEmail.get());
                 mEmailError.set("");
             }
@@ -171,6 +171,7 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
         String dataSend = gson.toJson(people);
         People peopleCheckData = gson.fromJson(dataSend, People.class);
         if(peopleCheckData.getFirst_name() != null && peopleCheckData.getEmail() != null && peopleCheckData.getPhoneNumber()!=null){
+            mAlertDialog.show();
             compositeDisposable.add(
                     mAddNewContactAPIService.addContact(peopleCheckData).subscribe(peopleData ->  onSuccess(peopleData),
                             throwable -> onError(throwable)));
@@ -178,7 +179,45 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
         notifyPropertyChanged(BR._all);
     }
 
+    private boolean isValidMobile(String phone) {
+        boolean check=false;
+        if(!Pattern.matches("[a-zA-Z]+", phone)) {
+            if(!(phone.length() >= 10 && phone.length() <=11)) {
+                check = false;
+                mPhoneNUmberError.set("Phone Number should be of 10 digits");
+            } else {
+                mPhoneNUmberError.set("");
+                check = true;
+            }
+        } else {
+            mPhoneNUmberError.set("Phone Number should be of 10 digits");
+            check=false;
+        }
+        return check;
+    }
+
+    private boolean isValidMail(String email) {
+        boolean check;
+        Pattern p;
+        Matcher m;
+
+        String EMAIL_STRING = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        p = Pattern.compile(EMAIL_STRING);
+
+        m = p.matcher(email);
+        check = m.matches();
+
+        if(!check) {
+            mEmailError.set("Invalid email format");
+        }
+        return check;
+    }
+
+
     private void onSuccess(AddNewContactAPIResponse response){
+        mAlertDialog.hide();
         if(response.error == null){
             mPeopleModel.clear();
             mActivityScreenSwitcher.open(new ContactListActivity.Screen());
@@ -188,6 +227,7 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
     }
 
     private void onError(Throwable throwable){
+        mAlertDialog.hide();
         UIHelper.showToastMessage(getContext(), throwable.getMessage().toString());
     }
 }

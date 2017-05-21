@@ -162,7 +162,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Phone"
                             android:maxLines="1"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:paddingBottom="16dp"
                             android:text="@={vm.mPhoneNumber}"
                             android:textSize="16sp" />
