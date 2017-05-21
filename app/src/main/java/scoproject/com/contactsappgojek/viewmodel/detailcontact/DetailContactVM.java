@@ -22,6 +22,7 @@ import javax.inject.Inject;
 
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.data.People;
+import scoproject.com.contactsappgojek.databinding.ActivityDetailContactListBinding;
 import scoproject.com.contactsappgojek.model.PeopleModel;
 import scoproject.com.contactsappgojek.networking.detailcontact.GetDetailContactAPIService;
 import scoproject.com.contactsappgojek.networking.updatecontact.UpdateContactAPIResponse;
@@ -61,11 +62,13 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
     private ClipboardManager myClipboard;
     private ClipData myClip;
     private AlertDialog mAlertDialog;
+    private ActivityDetailContactListBinding mViewBinding;
 
-    public DetailContactVM(long id){
+    public DetailContactVM(long id, ActivityDetailContactListBinding activityDetailContactListBinding){
         Log.d(getClass().getName(), String.valueOf(id));
         Log.d(getClass().getName(), "Constructor DetailContactVM");
         mPeopleId = id;
+        mViewBinding = activityDetailContactListBinding;
     }
 
     @Override
@@ -89,6 +92,12 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
         }else{
             setFavorite(false);
         }
+
+        Glide.with(getContext())
+                .load(people.profile_pic)
+                .placeholder(R.drawable.ic_betty_allen)
+                .into(mViewBinding.detailContactPhoto);
+
         mFullName.set(people.first_name + " " + people.last_name);
         mEmail.set(people.email);
         mPhoneNumber.set(people.phoneNumber);
@@ -171,14 +180,6 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
 
     public boolean isFavorite(){
         return mIsFavorite;
-    }
-
-    @BindingAdapter({"bind:imageUrl"})
-    public static void loadImage(ImageView view, String imageUrl) {
-        Glide.with(view.getContext())
-                .load(imageUrl)
-                .placeholder(R.drawable.ic_betty_allen)
-                .into(view);
     }
 
     private void onSuccess(UpdateContactAPIResponse response) {

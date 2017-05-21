@@ -95,7 +95,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends IBaseVM>
 //        }
     }
 
-    public ViewDataBinding getViewBinding(){
+    public B getViewBinding(){
         return binding;
     }
 

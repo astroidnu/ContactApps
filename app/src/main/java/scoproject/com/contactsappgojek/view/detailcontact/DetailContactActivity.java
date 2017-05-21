@@ -27,7 +27,7 @@ public class DetailContactActivity extends BaseActivity<ActivityDetailContactLis
     protected void onCreateUI(Bundle bundle) {
         setAndBindContentView(bundle, R.layout.activity_detail_contact_list);
         mPeopleId = getIntent().getLongExtra(Screen.PEOPLE_ID, 0);
-        mViewModel = new DetailContactVM(mPeopleId);
+        mViewModel = new DetailContactVM(mPeopleId, getViewBinding());
         mComponent.inject(mViewModel);
         mViewModel.takeContext(this);
         binding.setVm(mViewModel);
