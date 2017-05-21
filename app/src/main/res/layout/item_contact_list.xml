@@ -5,6 +5,9 @@
     <data>
         <import type="android.view.View"/>
         <variable
+            name="isIndex"
+            type="java.lang.Boolean" />
+        <variable
             name="obj"
             type="scoproject.com.contactsappgojek.data.People" />
         <variable
@@ -36,7 +39,7 @@
             android:layout_gravity="center"
             android:layout_weight="0.10"
             android:textAllCaps="true"
-            android:text="@{vm.mInitialName.substring(0,1)}"
+            android:text="@{isIndex ? vm.mInitialName.substring(0,1) : @string/empty}"
             tools:text="A"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"

@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
+import scoproject.com.contactsappgojek.BR;
 import scoproject.com.contactsappgojek.R;
 import scoproject.com.contactsappgojek.databinding.ItemContactFavoriteListBinding;
 import scoproject.com.contactsappgojek.databinding.ItemContactListBinding;
@@ -27,6 +29,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     private List<People> peopleList;
     private List<People> mPeopleFavoriteList = new ArrayList<>();
     private List<People> mPeopleUnFavoriteList = new ArrayList<>();
+    private ListIterator<People> listIterator;
 
     public ContactListAdapter(Context context, List<People> peoples){
         peopleList = peoples;
@@ -38,14 +41,14 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 mPeopleUnFavoriteList.add(people);
             }
         }
-
+        listIterator = peoples.listIterator();
         Log.d(getClass().getName(), String.valueOf(mPeopleFavoriteList.size()) + " "+String.valueOf(mPeopleUnFavoriteList.size()));
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewDataBinding viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),viewType, parent, false);
-        return new ViewHolder(viewDataBinding);
+        return new ViewHolder(viewDataBinding, false);
     }
 
     @Override
@@ -53,13 +56,42 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         switch (holder.getItemViewType()){
             case R.layout.item_contact_favorite_list:
                 ContactListRowFavVM contactListRowFavVM = new ContactListRowFavVM(mPeopleFavoriteList.get(position),  ((ItemContactFavoriteListBinding) holder.getDataBinding()));
+                ItemContactFavoriteListBinding mViewDataBindingFav = ((ItemContactFavoriteListBinding) holder.getDataBinding());
                 contactListRowFavVM.takeContext(mContext);
-                ((ItemContactFavoriteListBinding) holder.getDataBinding()).setVm(contactListRowFavVM);
+                if(position == 0){
+                    mViewDataBindingFav.setVariable(BR.isIndex, true);
+                }else{
+                    mViewDataBindingFav.setVariable(BR.isIndex, false);
+                }
+                mViewDataBindingFav.setVm(contactListRowFavVM);
                 break;
             case R.layout.item_contact_list:
-                ContactListRowVM contactListRowVM = new ContactListRowVM(mPeopleUnFavoriteList.get((position + 1) - mPeopleFavoriteList.size()),  ((ItemContactListBinding) holder.getDataBinding()));
+                String first_name = null;
+                String first_name_prev = null;
+                int index = position - mPeopleFavoriteList.size();
+                int index_prev = position - mPeopleFavoriteList.size();
+                if(index == 0){
+                    index_prev = index;
+                }else{
+                    index_prev = index_prev -1;
+                }
+                first_name = mPeopleUnFavoriteList.get(index).first_name.substring(0,1).toLowerCase();
+                first_name_prev =  mPeopleUnFavoriteList.get(index_prev).first_name.substring(0,1).toLowerCase();
+                Log.d(getClass().getName(), "Next" + String.valueOf(index_prev) + first_name_prev + "- prev" + String.valueOf(index)+ first_name);
+                ContactListRowVM contactListRowVM = new ContactListRowVM(mPeopleUnFavoriteList.get(position  - mPeopleFavoriteList.size()),  ((ItemContactListBinding) holder.getDataBinding()));
                 contactListRowVM.takeContext(mContext);
-                ((ItemContactListBinding) holder.getDataBinding()).setVm(contactListRowVM);
+                holder.getDataBinding().setVariable(BR.isIndex, true);
+                ItemContactListBinding mViewDataBinding = ((ItemContactListBinding) holder.getDataBinding());
+                if(index == 0){
+                    mViewDataBinding.setVariable(BR.isIndex, true);
+                }else{
+                    if(!first_name.equals(first_name_prev)){
+                        mViewDataBinding.setVariable(BR.isIndex, true);
+                    }else{
+                        mViewDataBinding.setVariable(BR.isIndex, false);
+                    }
+                }
+                mViewDataBinding.setVm(contactListRowVM);
                 break;
             case R.layout.item_section:
                 //Only for section view
@@ -84,10 +116,12 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ViewDataBinding mViewDataBinding;
+        private Boolean isIndex = false;
 
-        public ViewHolder(ViewDataBinding viewDataBinding){
+        public ViewHolder(ViewDataBinding viewDataBinding,Boolean isIndex){
             super(viewDataBinding.getRoot());
             mViewDataBinding = viewDataBinding;
+            this.isIndex = isIndex;
             mViewDataBinding.executePendingBindings();
         }
 
