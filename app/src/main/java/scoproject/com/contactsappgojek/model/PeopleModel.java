@@ -24,7 +24,8 @@ public class PeopleModel extends BaseModel{
 
     @Nullable
     public List<People> loadAll() {
-        return mEntityDao.loadAll();
+        return mEntityDao.queryBuilder()
+                .orderAsc(PeopleDao.Properties.First_name, PeopleDao.Properties.Favorite).list();
     }
 
     @Nullable
