@@ -1,5 +1,6 @@
 package scoproject.com.contactsappgojek.viewmodel.detailcontact;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
@@ -59,6 +60,7 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
 
     private ClipboardManager myClipboard;
     private ClipData myClip;
+    private AlertDialog mAlertDialog;
 
     public DetailContactVM(long id){
         Log.d(getClass().getName(), String.valueOf(id));
@@ -69,15 +71,18 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
     @Override
     public void onLoad(){
         super.onLoad();
+        mAlertDialog =   UIHelper.showProgressDialog(getContext());
         myClipboard = (ClipboardManager)getContext().getSystemService(getContext().CLIPBOARD_SERVICE);
         mPeople = new People();
+        mAlertDialog.show();
         compositeDisposable.add(
                 mGetDetailContactAPIService.getContactListById(mPeopleId).subscribe(peopleData ->setContactDetailData(peopleData),
-                        throwable -> Log.d(getClass().getName(), throwable.getMessage())));
+                        throwable ->  onError(throwable)));
     }
 
     @Override
     public void setContactDetailData(People people) {
+        mAlertDialog.hide();
         mPeople = people;
         if(mPeople.favorite){
             setFavorite(true);
@@ -150,6 +155,7 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
             //Update locally
             mPeopleModel.save(mPeople);
             //Send data to Server
+            mAlertDialog.show();
             compositeDisposable.add(
                     mUpdateContactAPIService.updateContact(mPeople.id,mPeople).subscribe(peopleData ->  onSuccess(peopleData),
                             throwable -> onError(throwable)));
@@ -176,6 +182,7 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
     }
 
     private void onSuccess(UpdateContactAPIResponse response) {
+        mAlertDialog.hide();
         if(response.error == null){
             UIHelper.showToastMessage(getContext(), "Successfully update contact");
         }else{
@@ -184,6 +191,7 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
     }
 
     private void onError(Throwable throwable) {
+        mAlertDialog.hide();
         UIHelper.showToastMessage(getContext(),throwable.getMessage());
     }
 
