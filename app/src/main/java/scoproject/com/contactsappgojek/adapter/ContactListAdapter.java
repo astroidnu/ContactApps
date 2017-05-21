@@ -55,21 +55,29 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         switch (holder.getItemViewType()){
             case R.layout.item_contact_favorite_list:
-                ContactListRowFavVM contactListRowFavVM = new ContactListRowFavVM(mPeopleFavoriteList.get(position),  ((ItemContactFavoriteListBinding) holder.getDataBinding()));
+                int index_fav = 0;
+                ContactListRowFavVM contactListRowFavVM = null;
                 ItemContactFavoriteListBinding mViewDataBindingFav = ((ItemContactFavoriteListBinding) holder.getDataBinding());
-                contactListRowFavVM.takeContext(mContext);
+                Log.d(getClass().getName(), String.valueOf(index_fav) +"-"+ String.valueOf(mPeopleFavoriteList.size() -1));
+                if(position == mPeopleFavoriteList.size() -1){
+                    contactListRowFavVM = new ContactListRowFavVM(mPeopleFavoriteList.get(position - 1), mViewDataBindingFav);
+                }else{
+                    index_fav = position;
+                    contactListRowFavVM = new ContactListRowFavVM(mPeopleFavoriteList.get(index_fav), mViewDataBindingFav);
+                }
                 if(position == 0){
                     mViewDataBindingFav.setVariable(BR.isIndex, true);
                 }else{
                     mViewDataBindingFav.setVariable(BR.isIndex, false);
                 }
+                contactListRowFavVM.takeContext(mContext);
                 mViewDataBindingFav.setVm(contactListRowFavVM);
                 break;
             case R.layout.item_contact_list:
-                String first_name = null;
-                String first_name_prev = null;
-                int index = position - mPeopleFavoriteList.size();
-                int index_prev = position - mPeopleFavoriteList.size();
+                String first_name;
+                String first_name_prev;
+                int index = (position - 1) - mPeopleFavoriteList.size();
+                int index_prev = (position - 1) - mPeopleFavoriteList.size();
                 if(index == 0){
                     index_prev = index;
                 }else{
@@ -77,8 +85,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 }
                 first_name = mPeopleUnFavoriteList.get(index).first_name.substring(0,1).toLowerCase();
                 first_name_prev =  mPeopleUnFavoriteList.get(index_prev).first_name.substring(0,1).toLowerCase();
-                Log.d(getClass().getName(), "Next" + String.valueOf(index_prev) + first_name_prev + "- prev" + String.valueOf(index)+ first_name);
-                ContactListRowVM contactListRowVM = new ContactListRowVM(mPeopleUnFavoriteList.get(position  - mPeopleFavoriteList.size()),  ((ItemContactListBinding) holder.getDataBinding()));
+                ContactListRowVM contactListRowVM = new ContactListRowVM(mPeopleUnFavoriteList.get((position -1)  - mPeopleFavoriteList.size()),  ((ItemContactListBinding) holder.getDataBinding()));
                 contactListRowVM.takeContext(mContext);
                 holder.getDataBinding().setVariable(BR.isIndex, true);
                 ItemContactListBinding mViewDataBinding = ((ItemContactListBinding) holder.getDataBinding());
@@ -103,8 +110,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     public int getItemViewType(int position) {
         if(position < mPeopleFavoriteList.size())
             return R.layout.item_contact_favorite_list;
-//        else if((mPeopleFavoriteList.size() + 1) == position)
-//            return R.layout.item_section;
+        else if(mPeopleFavoriteList.size() == position)
+            return R.layout.item_section;
         else
             return R.layout.item_contact_list;
     }
