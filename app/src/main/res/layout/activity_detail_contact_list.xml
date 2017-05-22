@@ -71,6 +71,7 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_favourite_filled"/>
                         <ImageButton
+                            android:id="@+id/detail_edit_contact"
                             android:onClick="@{()->vm.onEditMenuClick()}"
                             android:backgroundTint="@android:color/transparent"
                             android:layout_width="wrap_content"

@@ -112,7 +112,7 @@
                         android:layout_toRightOf="@+id/detail_contact_call"
                         android:orientation="vertical">
                         <EditText
-                            android:id="@+id/editText2"
+                            android:id="@+id/edit_fullname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Name"
@@ -122,6 +122,7 @@
                             android:text="@={vm.mFullName}"
                             android:textSize="16sp" />
                         <TextView
+                            android:id="@+id/edit_fullname_error"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="8dp"
@@ -152,7 +153,7 @@
                         android:layout_toRightOf="@+id/detail_contact_phone"
                         android:orientation="vertical">
                         <EditText
-                            android:id="@+id/editText"
+                            android:id="@+id/edit_phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Phone"
@@ -162,6 +163,7 @@
                             android:text="@={vm.mPhoneNumber}"
                             android:textSize="16sp" />
                         <TextView
+                            android:id="@+id/edit_phone_error"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8px"
@@ -192,6 +194,7 @@
                         android:layout_toRightOf="@+id/detail_contact_email"
                         android:orientation="vertical">
                         <EditText
+                            android:id="@+id/edit_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Email"
@@ -201,6 +204,7 @@
                             android:text="@={vm.mEmail}"
                             android:textSize="16sp" />
                         <TextView
+                            android:id="@+id/edit_email_error"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8px"

@@ -143,7 +143,7 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
                             String lastName = mFullNameSplit[1];
                             if(lastName.length()<2){
                                 isEnableSubmit = false;
-                                mFullNameError.set("Last Name must be contains minimum 2 character");
+                                mFullNameError.set("Last Name should be more contains than 2 characters");
                             }else {
                                 people.setFirst_name(mFullNameSplit[0]);
                                 people.setLast_name(mFullNameSplit[1]);
@@ -194,7 +194,7 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
 
     public boolean isValidName(String name){
         if(name.length() < 3){
-            mFullNameError.set("First Name and Last Name should be more than 3 characters");
+            mFullNameError.set("First Name and Last Name should be more contains than 3 characters");
             return false;
         }else{
             return true;

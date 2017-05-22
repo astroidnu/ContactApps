@@ -24,7 +24,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  * Created by ibnumuzzakkir on 5/22/17.
  */
 
-public class DetailContactActivityTest {
+public class DetailContactActivityInstrumentedTest {
     private DetailContactVM detailContactVM;
 
     private TestComponent testComponent;

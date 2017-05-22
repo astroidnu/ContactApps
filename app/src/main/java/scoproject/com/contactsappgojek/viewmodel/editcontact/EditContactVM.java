@@ -109,7 +109,7 @@ public class EditContactVM extends BaseVM implements IEditContactVM {
                             String lastName = mFullNameSplit[1];
                             if(lastName.length()<2){
                                 isEnableSubmit = false;
-                                mFullNameError.set("Last Name must be contains minimum 2 character");
+                                mFullNameError.set("Last Name should be more contains than 2 characters");
                             }else {
                                 people.setFirst_name(mFullNameSplit[0]);
                                 people.setLast_name(mFullNameSplit[1]);

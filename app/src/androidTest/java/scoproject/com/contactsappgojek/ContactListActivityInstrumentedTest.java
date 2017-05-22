@@ -36,7 +36,7 @@ import static scoproject.com.contactsappgojek.utils.RecyclerViewMatcher.withRecy
  * Created by ibnumuzzakkir on 5/21/17.
  */
 @RunWith(AndroidJUnit4.class)
-public class ContactListActivityTest {
+public class ContactListActivityInstrumentedTest {
     private TestComponent testComponent;
 
     @Inject
