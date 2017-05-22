@@ -59,8 +59,9 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
     public ObservableField<String> mEmailError = new ObservableField<>();
 
     private AlertDialog mAlertDialog;
-    private boolean isEnableSubmit = false;
-
+    private boolean isFullNameValid = false;
+    private boolean isPhoneNumberValid = false;
+    private boolean isEmailValid = false;
     public AddNewContactVM(){
     }
     @Override
@@ -121,10 +122,13 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws IOException {
         super.onActivityResult(requestCode,resultCode,data);
         if(requestCode == 1){
-            final File actualImage = FileUtil.from(getContext(), data.getData());
-            Log.d(getClass().getName(), String.valueOf(actualImage));
+            try {
+                 final File actualImage = FileUtil.from(getContext(), data.getData());
+                 Log.d(getClass().getName(), String.valueOf(actualImage));
+             }catch (Exception e) {
+                Log.e(getClass().getName(), e.getMessage());
+             }
         }
-
     }
 
 
@@ -142,12 +146,12 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
                             people.setFirst_name(mFullNameSplit[0]);
                             String lastName = mFullNameSplit[1];
                             if(lastName.length()<2){
-                                isEnableSubmit = false;
-                                mFullNameError.set("Last Name should be more contains than 2 characters");
+                                isFullNameValid = false;
+                                mFullNameError.set("Last Name should be contains more than 2 characters");
                             }else {
                                 people.setFirst_name(mFullNameSplit[0]);
                                 people.setLast_name(mFullNameSplit[1]);
-                                isEnableSubmit = true;
+                                isFullNameValid = true;
                                 mFullNameError.set("");
                             }
                         }else{
@@ -164,6 +168,7 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
 
         if(mPhoneNumber.get()!= null){
            if(isValidMobile(mPhoneNumber.get())){
+               isPhoneNumberValid = true;
                people.setPhoneNumber(mPhoneNumber.get());
                mPhoneNUmberError.set("");
            }
@@ -173,6 +178,7 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
 
         if(mEmail.get()!= null){
             if(isValidMail(mEmail.get())){
+                isEmailValid = true;
                 people.setEmail(mEmail.get());
                 mEmailError.set("");
             }
@@ -182,7 +188,7 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
         String dataSend = gson.toJson(people);
         People peopleCheckData = gson.fromJson(dataSend, People.class);
         if(peopleCheckData.getFirst_name() != null && peopleCheckData.getEmail() != null && peopleCheckData.getPhoneNumber()!=null){
-            if(isEnableSubmit){
+            if(isFullNameValid && isPhoneNumberValid && isEmailValid){
                 mAlertDialog.show();
                 compositeDisposable.add(
                         mAddNewContactAPIService.addContact(peopleCheckData).subscribe(peopleData ->  onSuccess(peopleData),

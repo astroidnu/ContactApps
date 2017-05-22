@@ -24,6 +24,7 @@ import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIS
 import scoproject.com.contactsappgojek.viewmodel.addnewcontact.AddNewContactVM;
 import scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListVM;
 import scoproject.com.contactsappgojek.viewmodel.contactlist.IContactListVM;
+import scoproject.com.contactsappgojek.viewmodel.editcontact.EditContactVM;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -42,6 +43,7 @@ public class AllContactVMUnitTest {
     @Mock
     private ContactListVM contactListVM;
     private AddNewContactVM addNewContactVM;
+    private EditContactVM editContactVM;
     private CompositeDisposable compositeDisposable;
     ContactListAdapter contactListAdapter;
     @Mock
@@ -101,5 +103,23 @@ public class AllContactVMUnitTest {
         assertEquals(addNewContactVM.isValidMobile("0998012341234"), false);
         assertEquals(addNewContactVM.isValidMail("test@ibnu.com"), true);
         assertEquals(addNewContactVM.isValidMobile("+1234567890"), true);
+    }
+
+    @Test
+    public void onEditContactValidation() {
+        assertEquals(editContactVM.isValidName(""), false);
+        assertEquals(editContactVM.isValidMobile(""), false);
+        assertEquals(editContactVM.isValidMail(""), false);
+
+        assertEquals(editContactVM.isValidName("aa"), false);
+        assertEquals(editContactVM.isValidMobile("999999"), false);
+        assertEquals(editContactVM.isValidMail("aaaa.com"), false);
+
+        assertEquals(editContactVM.isValidName("aaa"), true);
+        assertEquals(editContactVM.isValidMobile("+91998012341234"), false);
+        assertEquals(editContactVM.isValidMobile("998012341234"), false);
+        assertEquals(editContactVM.isValidMobile("0998012341234"), false);
+        assertEquals(editContactVM.isValidMail("test@ibnu.com"), true);
+        assertEquals(editContactVM.isValidMobile("+1234567890"), true);
     }
 }

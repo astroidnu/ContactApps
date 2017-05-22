@@ -59,7 +59,9 @@ public class EditContactVM extends BaseVM implements IEditContactVM {
     private People mPeople;
 
     private AlertDialog mAlertDialog;
-    private boolean isEnableSubmit = false;
+    private boolean isFullNameValid = false;
+    private boolean isPhoneNumberValid = false;
+    private boolean isEmailValid = false;
     private ActivityEditContactBinding mActivityEditContactBinding;
 
     public EditContactVM(People people, ActivityEditContactBinding activityEditContactBinding){
@@ -108,12 +110,12 @@ public class EditContactVM extends BaseVM implements IEditContactVM {
                             people.setFirst_name(mFullNameSplit[0]);
                             String lastName = mFullNameSplit[1];
                             if(lastName.length()<2){
-                                isEnableSubmit = false;
-                                mFullNameError.set("Last Name should be more contains than 2 characters");
+                                isFullNameValid = false;
+                                mFullNameError.set("Last Name should be contains more than 2 characters");
                             }else {
                                 people.setFirst_name(mFullNameSplit[0]);
                                 people.setLast_name(mFullNameSplit[1]);
-                                isEnableSubmit = true;
+                                isFullNameValid = true;
                                 mFullNameError.set("");
                             }
                         }else{
@@ -130,6 +132,7 @@ public class EditContactVM extends BaseVM implements IEditContactVM {
 
         if(mPhoneNumber.get()!= null){
             if(isValidMobile(mPhoneNumber.get())){
+                isPhoneNumberValid = true;
                 people.setPhoneNumber(mPhoneNumber.get());
                 mPhoneNUmberError.set("");
             }
@@ -139,6 +142,7 @@ public class EditContactVM extends BaseVM implements IEditContactVM {
 
         if(mEmail.get()!= null){
             if(isValidMail(mEmail.get())){
+                isEmailValid = true;
                 people.setEmail(mEmail.get());
                 mEmailError.set("");
             }
@@ -149,7 +153,7 @@ public class EditContactVM extends BaseVM implements IEditContactVM {
         String dataSend = gson.toJson(people);
         People peopleCheckData = gson.fromJson(dataSend, People.class);
         if(peopleCheckData.getFirst_name() != null && peopleCheckData.getEmail() != null && peopleCheckData.getPhoneNumber()!=null){
-            if(isEnableSubmit){
+            if(isFullNameValid && isEmailValid && isPhoneNumberValid){
                 mAlertDialog.show();
                 compositeDisposable.add(
                         mUpdateContactAPIService.updateContact(mPeople.getId(), peopleCheckData).subscribe(peopleData ->  onSuccess(peopleData),

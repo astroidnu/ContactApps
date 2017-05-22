@@ -29,6 +29,7 @@ import scoproject.com.contactsappgojek.view.contactlist.ContactListActivity;
 import scoproject.com.contactsappgojek.view.editcontact.EditContactActivity;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -55,6 +56,7 @@ public class EditContactActivityInstrumentedTest {
     private MockWebServer mMockWebServer;
     private People mPeople;
     private CompositeDisposable mCompositeDisposable;
+
 
     @Before
     public void SetUp() throws Exception{
@@ -85,16 +87,19 @@ public class EditContactActivityInstrumentedTest {
         onView(withId(R.id.detail_edit_contact)).check(matches(isDisplayed()));
         onView(withId(R.id.detail_edit_contact)).perform(click());
         ViewInteraction mEdFullName = onView(allOf(ViewMatchers.withId(R.id.edit_fullname), isDisplayed()));
+        mEdFullName.perform(clearText());
         mEdFullName.perform(typeText("ibnu ga"), closeSoftKeyboard());
         Thread.sleep(250);
         ViewInteraction mEdPhoneNumber = onView(allOf(ViewMatchers.withId(R.id.edit_phone), isDisplayed()));
+        mEdPhoneNumber.perform(clearText());
         mEdPhoneNumber.perform(typeText(String.valueOf("1234567890")), closeSoftKeyboard());
         Thread.sleep(250);
         ViewInteraction mEdEmail = onView(allOf(ViewMatchers.withId(R.id.edit_email), isDisplayed()));
+        mEdEmail.perform(clearText());
         mEdEmail.perform(typeText("ibnu@ibnu.com"), closeSoftKeyboard());
         Thread.sleep(250);
         onView(withId(R.id.toolbar_submit)).perform(click());
-        onView(withId(R.id.edit_fullname_error)).check(matches(withText("Last Name should be more contains than 2 characters")));
+        onView(withId(R.id.edit_fullname_error)).check(matches(withText("Last Name should be contains more than 2 characters")));
     }
 
     @Test
