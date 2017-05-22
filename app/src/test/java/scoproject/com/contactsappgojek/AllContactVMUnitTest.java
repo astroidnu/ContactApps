@@ -38,9 +38,10 @@ import static org.mockito.Mockito.when;
  * Created by ibnumuzzakkir on 5/21/17.
  */
 
-public class ContactListVMUnitTest {
+public class AllContactVMUnitTest {
     @Mock
     private ContactListVM contactListVM;
+    private AddNewContactVM addNewContactVM;
     private CompositeDisposable compositeDisposable;
     ContactListAdapter contactListAdapter;
     @Mock
@@ -52,6 +53,7 @@ public class ContactListVMUnitTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        addNewContactVM = new AddNewContactVM();
         contactListAdapter = PowerMockito.mock(ContactListAdapter.class);
         contactListVM = PowerMockito.mock(ContactListVM.class);
         getContactListAPIService = PowerMockito.mock(GetContactListAPIService.class);
@@ -81,5 +83,23 @@ public class ContactListVMUnitTest {
             }
         });
         contactListVM.onError();
+    }
+
+    @Test
+    public void onCreateContactValidation() {
+        assertEquals(addNewContactVM.isValidName(""), false);
+        assertEquals(addNewContactVM.isValidMobile(""), false);
+        assertEquals(addNewContactVM.isValidMail(""), false);
+
+        assertEquals(addNewContactVM.isValidName("aa"), false);
+        assertEquals(addNewContactVM.isValidMobile("999999"), false);
+        assertEquals(addNewContactVM.isValidMail("aaaa.com"), false);
+
+        assertEquals(addNewContactVM.isValidName("aaa"), true);
+        assertEquals(addNewContactVM.isValidMobile("+91998012341234"), false);
+        assertEquals(addNewContactVM.isValidMobile("998012341234"), false);
+        assertEquals(addNewContactVM.isValidMobile("0998012341234"), false);
+        assertEquals(addNewContactVM.isValidMail("test@ibnu.com"), true);
+        assertEquals(addNewContactVM.isValidMobile("+1234567890"), true);
     }
 }
