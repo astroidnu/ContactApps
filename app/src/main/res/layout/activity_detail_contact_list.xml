@@ -57,6 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <ImageButton
+                            android:id="@+id/detail_favorite_contact"
                             android:visibility="@{vm.isFavorite ? View.GONE : View.VISIBLE}"
                             android:onClick="@{()->vm.onFavoriteClick()}"
                             android:backgroundTint="@android:color/transparent"

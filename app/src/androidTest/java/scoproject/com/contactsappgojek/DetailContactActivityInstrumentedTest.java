@@ -41,5 +41,8 @@ public class DetailContactActivityInstrumentedTest {
     @Test
     public void checkAllComponentIsExist(){
         onView(withId(R.id.detail_fullname)).check(matches(isDisplayed()));
+        onView(withId(R.id.detail_contact_call)).check(matches(isDisplayed()));
+        onView(withId(R.id.detail_contact_email)).check(matches(isDisplayed()));
+        onView(withId(R.id.detail_contact_phone)).check(matches(isDisplayed()));
     }
 }

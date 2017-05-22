@@ -83,21 +83,17 @@ public class EditContactActivityInstrumentedTest {
                 .check(matches(hasDescendant(withText("123HH Bachchan"))));
         onView(withId(R.id.recycle_contact_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        Thread.sleep(250);
         onView(withId(R.id.detail_edit_contact)).check(matches(isDisplayed()));
         onView(withId(R.id.detail_edit_contact)).perform(click());
         ViewInteraction mEdFullName = onView(allOf(ViewMatchers.withId(R.id.edit_fullname), isDisplayed()));
         mEdFullName.perform(clearText());
         mEdFullName.perform(typeText("ibnu ga"), closeSoftKeyboard());
-        Thread.sleep(250);
         ViewInteraction mEdPhoneNumber = onView(allOf(ViewMatchers.withId(R.id.edit_phone), isDisplayed()));
         mEdPhoneNumber.perform(clearText());
         mEdPhoneNumber.perform(typeText(String.valueOf("1234567890")), closeSoftKeyboard());
-        Thread.sleep(250);
         ViewInteraction mEdEmail = onView(allOf(ViewMatchers.withId(R.id.edit_email), isDisplayed()));
         mEdEmail.perform(clearText());
         mEdEmail.perform(typeText("ibnu@ibnu.com"), closeSoftKeyboard());
-        Thread.sleep(250);
         onView(withId(R.id.toolbar_submit)).perform(click());
         onView(withId(R.id.edit_fullname_error)).check(matches(withText("Last Name should be contains more than 2 characters")));
     }
