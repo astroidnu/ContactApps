@@ -19,6 +19,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import scoproject.com.contactsappgojek.adapter.ContactListAdapter;
 import scoproject.com.contactsappgojek.data.People;
 import scoproject.com.contactsappgojek.databinding.ActivityContactListBinding;
+import scoproject.com.contactsappgojek.databinding.ActivityEditContactBinding;
 import scoproject.com.contactsappgojek.model.PeopleModel;
 import scoproject.com.contactsappgojek.networking.contactlist.GetContactListAPIService;
 import scoproject.com.contactsappgojek.viewmodel.addnewcontact.AddNewContactVM;
@@ -42,20 +43,31 @@ import static org.mockito.Mockito.when;
 public class AllContactVMUnitTest {
     @Mock
     private ContactListVM contactListVM;
+    People mPeople;
     private AddNewContactVM addNewContactVM;
     private EditContactVM editContactVM;
     private CompositeDisposable compositeDisposable;
     ContactListAdapter contactListAdapter;
     @Mock
     GetContactListAPIService getContactListAPIService;
-    ActivityContactListBinding mActivityContactListBinding;
+    ActivityContactListBinding mContactListBinding;
+    @Mock
+    ActivityEditContactBinding mEditBinding;
     @Mock
     PeopleModel mPeopleModel;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        mPeople = new People();
+        mPeople.setEmail("ibnu");
+        mPeople.setFavorite(false);
+        mPeople.setFirst_name("Ibnu");
+        mPeople.setLast_name("Muzzakkir");
+        mPeople.setPhoneNumber("0147852363");
+        mEditBinding = PowerMockito.mock(ActivityEditContactBinding.class);
         addNewContactVM = new AddNewContactVM();
+        editContactVM = new EditContactVM(mPeople, mEditBinding);
         contactListAdapter = PowerMockito.mock(ContactListAdapter.class);
         contactListVM = PowerMockito.mock(ContactListVM.class);
         getContactListAPIService = PowerMockito.mock(GetContactListAPIService.class);
