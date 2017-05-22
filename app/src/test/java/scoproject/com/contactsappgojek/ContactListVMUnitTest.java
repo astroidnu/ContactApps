@@ -67,6 +67,19 @@ public class ContactListVMUnitTest {
 
             }
         });
-        contactListVM.checkingAndSetData();
+        contactListVM.onSuccess(peopleList);
+    }
+
+    @Test
+    public void onGetContactListFailedTest(){
+        List<People> peopleList = new ArrayList<>();
+        peopleList.add(new People());
+        when(getContactListAPIService.getContactList()).thenReturn(new Flowable<List<People>>() {
+            @Override
+            protected void subscribeActual(Subscriber<? super List<People>> s) {
+
+            }
+        });
+        contactListVM.onError();
     }
 }

@@ -29,13 +29,11 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     private List<People> peopleList;
     private List<People> mPeopleFavoriteList = new ArrayList<>();
     private List<People> mPeopleUnFavoriteList = new ArrayList<>();
-    private ListIterator<People> listIterator;
 
     public ContactListAdapter(Context context, List<People> peoples){
         peopleList = peoples;
         mContext = context;
-        setContactList(peopleList);
-        listIterator = peoples.listIterator();
+        setContactList(peoples);
         Log.d(getClass().getName(), String.valueOf(mPeopleFavoriteList.size()) + " "+String.valueOf(mPeopleUnFavoriteList.size()));
     }
 

@@ -1,10 +1,11 @@
 package scoproject.com.contactsappgojek.component;
 
 import dagger.Component;
-import scoproject.com.contactsappgojek.ContactListVMUnitTest;
+import scoproject.com.contactsappgojek.AddContactActivityInstumentedTest;
+import scoproject.com.contactsappgojek.ContactListActivityTest;
+import scoproject.com.contactsappgojek.DetailContactActivityTest;
 import scoproject.com.contactsappgojek.di.component.AppComponent;
 import scoproject.com.contactsappgojek.scope.TestScope;
-import scoproject.com.contactsappgojek.view.contactlist.ContactListScope;
 
 /**
  * Created by ibnumuzzakkir on 5/21/17.
@@ -12,5 +13,7 @@ import scoproject.com.contactsappgojek.view.contactlist.ContactListScope;
 @TestScope
 @Component(dependencies = {AppComponent.class})
 public interface TestComponent {
-    void inject(ContactListVMUnitTest contactListVMUnitTest);
+    void inject(ContactListActivityTest contactListActivityTest);
+    void inject(AddContactActivityInstumentedTest addContactActivityTest);
+    void inject(DetailContactActivityTest detailContactActivityTest);
 }

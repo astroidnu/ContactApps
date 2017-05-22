@@ -126,16 +126,15 @@ public class ContactListVM extends BaseVM<ViewVM, ContactListActivity> implement
 
     public void onSuccess(List<People> peopleList) {
         if(peopleList.size() > 0){
-            setIsContactNull(true);
+            setIsContactNull(false);
             for(People people : peopleList){
                 mPeopleModel.save(people);
             }
-            mContactListAdapter = new ContactListAdapter(getContext(),peopleList);
-            mContactListAdapter.notifyDataSetChanged();
         }else{
             setIsContactNull(true);
         }
-
+        mContactListAdapter = new ContactListAdapter(getContext(),peopleList);
+        mContactListAdapter.notifyDataSetChanged();
         mProgressDialog.hide();
         setLoading(false);
         notifyPropertyChanged(BR._all);
