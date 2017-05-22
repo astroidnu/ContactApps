@@ -59,6 +59,7 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
     public ObservableField<String> mEmailError = new ObservableField<>();
 
     private AlertDialog mAlertDialog;
+    private boolean isEnableSubmit = false;
 
     public AddNewContactVM(){
     }
@@ -139,8 +140,16 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
                         String[] mFullNameSplit = mFullName.get().split(" ");
                         if(mFullNameSplit.length > 1){
                             people.setFirst_name(mFullNameSplit[0]);
-                            people.setLast_name(mFullNameSplit[1]);
-                            mFullNameError.set("");
+                            String lastName = mFullNameSplit[1];
+                            if(lastName.length()<2){
+                                isEnableSubmit = false;
+                                mFullNameError.set("Last Name must be contains minimum 2 character");
+                            }else {
+                                people.setFirst_name(mFullNameSplit[0]);
+                                people.setLast_name(mFullNameSplit[1]);
+                                isEnableSubmit = true;
+                                mFullNameError.set("");
+                            }
                         }else{
                             mFullNameError.set("Name must be contains first and last");
                         }
@@ -173,10 +182,12 @@ public class AddNewContactVM extends BaseVM implements IAddNewContactVM{
         String dataSend = gson.toJson(people);
         People peopleCheckData = gson.fromJson(dataSend, People.class);
         if(peopleCheckData.getFirst_name() != null && peopleCheckData.getEmail() != null && peopleCheckData.getPhoneNumber()!=null){
-            mAlertDialog.show();
-            compositeDisposable.add(
-                    mAddNewContactAPIService.addContact(peopleCheckData).subscribe(peopleData ->  onSuccess(peopleData),
-                            throwable -> onError(throwable)));
+            if(isEnableSubmit){
+                mAlertDialog.show();
+                compositeDisposable.add(
+                        mAddNewContactAPIService.addContact(peopleCheckData).subscribe(peopleData ->  onSuccess(peopleData),
+                                throwable -> onError(throwable)));
+            }
         }
         notifyPropertyChanged(BR._all);
     }
