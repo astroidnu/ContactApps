@@ -13,6 +13,7 @@
             type="scoproject.com.contactsappgojek.viewmodel.contactlist.ContactListRowFavVM"/>
     </data>
     <LinearLayout
+        android:background="@color/colorWhite"
         android:onClick="@{()->vm.onItemClick()}"
         android:orientation="vertical"
         android:layout_width="match_parent"

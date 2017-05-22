@@ -9,6 +9,7 @@
             type="scoproject.com.contactsappgojek.viewmodel.detailcontact.DetailContactVM"/>
     </data>
     <android.support.design.widget.CoordinatorLayout
+        android:background="@color/colorWhite"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -17,7 +17,6 @@
             type="scoproject.com.contactsappgojek.ui.base.BaseVM"/>
     </data>
     <android.support.v7.widget.Toolbar
-
         android:id="@+id/com_scoproject_ss_view_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
