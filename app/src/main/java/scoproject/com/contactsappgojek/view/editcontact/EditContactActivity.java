@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import java.io.IOException;
 
 import scoproject.com.contactsappgojek.R;
+import scoproject.com.contactsappgojek.data.People;
 import scoproject.com.contactsappgojek.databinding.ActivityEditContactBinding;
 import scoproject.com.contactsappgojek.di.component.AppComponent;
 import scoproject.com.contactsappgojek.ui.base.BaseActivity;
@@ -26,7 +27,8 @@ public class EditContactActivity extends BaseActivity<ActivityEditContactBinding
     @Override
     protected void onCreateUI(Bundle bundle) {
         setAndBindContentView(bundle, R.layout.activity_edit_contact);
-        mEditContactVM = new EditContactVM();
+        People people = getIntent().getParcelableExtra(Screen.PEOPLE_DATA);
+        mEditContactVM = new EditContactVM(people, getViewBinding());
         mComponent.inject(mEditContactVM);
         mEditContactVM.takeContext(this);
         binding.setVm(mEditContactVM);
@@ -50,14 +52,16 @@ public class EditContactActivity extends BaseActivity<ActivityEditContactBinding
 
     public static class Screen extends ActivityScreen {
 
-
-        public Screen(){
+        private static final String PEOPLE_DATA = "people_data";
+        private People mPeople;
+        public Screen(People people){
+            mPeople = people;
 
         }
 
         @Override
         protected void configureIntent(@NonNull Intent intent) {
-
+            intent.putExtra(PEOPLE_DATA, mPeople);
         }
 
         @Override

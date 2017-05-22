@@ -142,7 +142,7 @@ public class DetailContactVM extends BaseVM implements IDetailContact{
     }
 
     public void onEditMenuClick(){
-        mActivityScreenSwitcher.open(new EditContactActivity.Screen());
+        mActivityScreenSwitcher.open(new EditContactActivity.Screen(mPeople));
     }
 
     public void onIconEmailClick(){
