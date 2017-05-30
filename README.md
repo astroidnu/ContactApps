@@ -1,9 +1,9 @@
-# ContactAppsGo-Jek
+# ContactApps
 
 Contacts App Android build with technology :
 
-MVVM Pattern
-RXjava 2
-Retrofit 2
-Dagger 2
-Testing tools using Roboelectric and Espresso
+1. MVVM Pattern
+2. RXjava 2
+3. Retrofit 2
+4. Dagger 2
+5. Testing tools using Mockito and Espresso
